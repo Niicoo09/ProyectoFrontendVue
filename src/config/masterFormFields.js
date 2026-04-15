@@ -1,0 +1,539 @@
+import { cnaeOptions } from "./cnaeOptions"
+import { tipoViaOptions } from "./tipoViaOptions"
+import { distribuidoraOptions } from "./distribuidoraOptions"
+
+export const masterFormFields = [
+  // ========== SECCIÓN A ==========
+
+  { name: 'fecha', label: 'Fecha', placeholder: 'Ej: 16/10/2025', type: 'date', subsection: 'A' },
+  { name: 'dia', label: 'Día (Licencia)', placeholder: 'Ej: 15', type: 'text', subsection: 'A' },
+  { name: 'mes', label: 'Mes (Licencia)', placeholder: 'Ej: 02', type: 'text', subsection: 'A' },
+  { name: 'anio', label: 'Año (Licencia)', placeholder: 'Ej: 2026', type: 'text', subsection: 'A' },
+  { name: 'apellidosNombre', label: 'Apellidos y Nombre del Titular', placeholder: 'Ej: García López, Juan', type: 'text', subsection: 'A' },
+  { name: 'nifCif', label: 'NIF/CIF del Titular', placeholder: 'Ej: 12.345.678-A', type: 'text', subsection: 'A' },
+  { name: 'telefono', label: 'Teléfono Móvil', placeholder: 'Ej: 654 123 456', type: 'tel', subsection: 'A' },
+  { name: 'correoElectronicoEmplazamiento', label: 'Correo Electrónico del Emplazamiento', placeholder: 'Ej: emplazamiento@correo.com', type: 'email', subsection: 'A' },
+  { name: 'emplazamientoCalle', label: 'Calle del Emplazamiento', placeholder: 'Ej: Avenida de la Innovación', type: 'text', subsection: 'A' },
+  { name: 'numero', label: 'Número', placeholder: 'Ej: 42', type: 'text', subsection: 'A' },
+  { name: 'portal', label: 'Portal', placeholder: 'Ej: 3', type: 'text', subsection: 'A' },
+  { name: 'bloque', label: 'Bloque', placeholder: 'Ej: A', type: 'text', subsection: 'A' },
+  { name: 'escalera', label: 'Escalera', placeholder: 'Ej: 1', type: 'text', subsection: 'A' },
+  { name: 'KMEnLaVia', label: 'KM en la Vía', placeholder: 'Ej: 5', type: 'text', subsection: 'A' },
+  { name: 'planta', label: 'Planta', placeholder: 'Ej: 3º', type: 'text', subsection: 'A' },
+  { name: 'puerta', label: 'Puerta', placeholder: 'Ej: B', type: 'text', subsection: 'A' },
+  { name: 'telefonoFijo', label: 'Teléfono Fijo', placeholder: 'Ej: 954 123 456', type: 'tel', subsection: 'A' },
+  { name: 'localidadEmplazamiento', label: 'Localidad del Emplazamiento', placeholder: 'Ej: Sevilla', type: 'text', subsection: 'A' },
+  { name: 'provinciaEmplazamiento', label: 'Provincia del Emplazamiento', placeholder: 'Ej: Sevilla', type: 'text', subsection: 'A' },
+  { name: 'codigoPostalEmplazamiento', label: 'Código Postal del Emplazamiento', placeholder: 'Ej: 41001', type: 'text', subsection: 'A' },
+  { name: 'direccionCompleta', label: 'Dirección Completa', placeholder: 'Ej: Avenida de la Innovación 42, 1ºA, 41001 Sevilla', type: 'text', subsection: 'A' },
+  { name: 'referenciaCatastral', label: 'Referencia Catastral', placeholder: 'Ej: 4127805SG0000200000CT', type: 'text', subsection: 'A' },
+  { name: 'denominacionEstablecimiento', label: 'Denominación del Establecimiento', placeholder: 'Ej: Bar Los Amigos', type: 'text', subsection: 'A' },
+  { name: 'nifEstablecimiento', label: 'NIF del Establecimiento', placeholder: 'Ej: B12345678', type: 'text', subsection: 'A' },
+
+  /*   { name: 'tipoVia', label: 'Tipo de Vía', placeholder: 'Ej: Avenida, Calle, Plaza...', type: 'text', subsection: 'A' },
+   */
+
+  /*   { name: 'nifEntidadRepresentada', label: 'NIF de la Entidad Representada', placeholder: 'Ej: B12345678', type: 'text', subsection: 'A' },
+  
+    /*   { name: 'pais', label: 'País', placeholder: 'Ej: España', type: 'text', subsection: 'A' },
+     */
+  // ========== SECCIÓN E2: INSTALACIÓN INTERCONECTADA ==========
+  // E2.1 Conexión a la Red
+  { name: 'tipoInstalacion', label: 'Tipo de Instalación', placeholder: 'Seleccionar tipo...', type: 'select', options: ['Fotovoltaica conectada a red interior', 'Fotovoltaica aislada', 'Instalación con fines especiales'], subsection: 'E2' },
+/*   { name: 'usoDestino', label: 'Uso y Destino', placeholder: 'Ej: Autoconsumo para vivienda', type: 'text', subsection: 'E2' },
+ */ { name: 'e2_potenciaNominalInversores', label: 'POTENCIA NOMINAL TOTAL EN INVERSORES (kW)', placeholder: 'Ej: 5.5', type: 'text', subsection: 'E2' },
+  { name: 'e2_tipoConexionRed', label: 'TIPO', placeholder: 'Ej: Monofásica / Trifásica', type: 'select', options: ['Monofásica', 'Trifásica'], subsection: 'E2' },
+  { name: 'presupuestoTotal', label: 'Presupuesto Total', placeholder: 'Ej: 10000', type: 'text', subsection: 'E2' },
+  // E2.2 Módulo Fotovoltaico
+/*   { name: 'e2_tecnologiaCelulaModulo', label: 'TECNOLOGÍA DE LA CÉLULA', placeholder: 'Ej: Monocristalino -PERC-', type: 'text', subsection: 'E2' },
+ */  {
+    name: 'e2_marcaModeloModulo',
+    label: 'MARCA Y MODELO',
+    placeholder: 'Ej: JA Solar JAM72S30 450/MR',
+    type: 'equipment-autocomplete',
+    equipmentType: 'modulos',
+    mapping: {
+      marca: 'e2_marcaModeloModulo',
+      potenciaPicoModulo: 'e2_potenciaPicoModulo',
+      potenciaPicoGenerador: 'e2_potenciaPicoGenerador',
+      intensidadIpmp: 'e2_intensidadIpmpGenerador',
+      tensionVpmp: 'e2_tensionVpmpGenerador',
+      orientacion: 'e2_orientacionGenerador',
+      inclinacion: 'e2_inclinacionGenerador',
+      totalModulos: 'e2_totalModulos',
+      modulosEnSerie: 'e2_modulosEnSerie',
+      ramasEnParalelo: 'e2_ramasEnParalelo',
+      disposicionModulos: 'disposicionModulos'
+    },
+    subsection: 'E2',
+    group: 'Modulo'
+  },
+  { name: 'e2_potenciaPicoModulo', label: 'POTENCIA PICO (Wp) DEL MÓDULO', placeholder: 'Ej: 450', type: 'text', subsection: 'E2', group: 'Modulo' },
+  /*   { name: 'e2_toncModulo', label: 'TONC (ºC)', placeholder: 'Ej: 45', type: 'text', subsection: 'E2' },
+   */
+  // E2.3 Generador Fotovoltaico
+  { name: 'e2_potenciaPicoGenerador', label: 'POTENCIA PICO (Wp) DEL GENERADOR', placeholder: 'Ej: 4500', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_intensidadIpmpGenerador', label: 'INTENSIDAD MÁXIMA POTENCIA, Ipmp (A)', placeholder: 'Ej: 10', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_tensionVpmpGenerador', label: 'TENSIÓN MÁXIMA POTENCIA, Vpmp (V)', placeholder: 'Ej: 400', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_orientacionGenerador', label: 'ORIENTACIÓN', placeholder: 'Ej: Sur', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_inclinacionGenerador', label: 'INCLINACIÓN (º)', placeholder: 'Ej: 30', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_totalModulos', label: 'Nº TOTAL MÓDULOS', placeholder: 'Ej: 10', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_modulosEnSerie', label: 'Nº MÓDULOS EN SERIE', placeholder: 'Ej: 10', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_ramasEnParalelo', label: 'Nº RAMAS EN PARALELO', placeholder: 'Ej: 1', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'disposicionModulos', label: 'DISPOSICIÓN DE LOS MÓDULOS', placeholder: 'Ej: En fila horizontal', type: 'select', options: ['Cubierta Teja - Aporticada', 'Cubierta Teja - Coplanar', 'Cubierta Plana', 'Pérgola', 'Chapa Grecada - Aporticada', 'Chapa Grecada - Coplanar', 'Suelo', 'Paramento Vertical'], subsection: 'E2', group: 'Modulo' },
+
+  // E2.4 Inversor
+  {
+    name: 'e2_marcaModeloInversor',
+    label: 'MARCA Y MODELO 1',
+    placeholder: 'Ej: Fronius Symo',
+    type: 'equipment-autocomplete',
+    equipmentType: 'inversores',
+    mapping: {
+      marcaModelo: 'e2_marcaModeloInversor',
+      potencia: 'e2_potenciaNominalInversor',
+      vccMaxima: 'e2_formaOndaSalidaInversor',
+      vccMinima: 'e2_frecuenciaNominalInversor',
+      conexion: 'e2_tipoConexionRed1',
+      relacionTension: 'e2_relacionTensionInversor'
+    },
+    subsection: 'E2',
+    group: 'Inversor'
+  },
+  { name: 'e2_potenciaNominalInversor', label: 'POTENCIA NOMINAL (kW) 1', placeholder: 'Ej: 5000', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_relacionTensionInversor', label: 'RELACIÓN TENSIÓN  AC, Vn (V) 1', placeholder: 'Ej: 230V/400V', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_formaOndaSalidaInversor', label: 'Vcc MÁXIMA 1', placeholder: 'Ej: Senoidal Pura', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_frecuenciaNominalInversor', label: 'Vcc MÍNIMA 1', placeholder: 'Ej: 50', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_tipoConexionRed1', label: 'CONEXIÓN 1', placeholder: 'Ej: Monofásica / Trifásica', type: 'select', options: ['Monofásica', 'Trifásica'], subsection: 'E2', group: 'Inversor' },
+  {
+    name: 'e2_marcaModeloInversor2',
+    label: 'MARCA Y MODELO 2',
+    placeholder: 'Ej: Fronius Symo',
+    type: 'equipment-autocomplete',
+    equipmentType: 'inversores',
+    mapping: {
+      marcaModelo: 'e2_marcaModeloInversor2',
+      potencia: 'e2_potenciaNominalInversor2',
+      vccMaxima: 'e2_formaOndaSalidaInversor2',
+      vccMinima: 'e2_frecuenciaNominalInversor2',
+      conexion: 'e2_tipoConexionRed2',
+      relacionTension: 'e2_relacionTensionInversor2'
+    },
+    subsection: 'E2',
+    group: 'Inversor'
+  },
+  { name: 'e2_potenciaNominalInversor2', label: 'POTENCIA NOMINAL (kW) 2', placeholder: 'Ej: 5000', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_relacionTensionInversor2', label: 'RELACIÓN TENSIÓN  AC, Vn (V) 2', placeholder: 'Ej: 230V/400V', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_formaOndaSalidaInversor2', label: 'Vcc MÁXIMA 2', placeholder: 'Ej: Senoidal Pura', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_frecuenciaNominalInversor2', label: 'Vcc MÍNIMA 2', placeholder: 'Ej: 50', type: 'text', subsection: 'E2', group: 'Inversor' },
+  { name: 'e2_tipoConexionRed2', label: 'CONEXIÓN 2', placeholder: 'Ej: Monofásica / Trifásica', type: 'select', options: ['Monofásica', 'Trifásica'], subsection: 'E2', group: 'Inversor' },
+  /*   { name: 'e2_tensionSalidaInversor', label: 'TENSIÓN SALIDA (V)', placeholder: 'Ej: 400', type: 'text', subsection: 'E2' },
+    { name: 'e2_consumoVacioInversor', label: 'CONSUMO EN VACÍO', placeholder: 'Ej: 50', type: 'text', subsection: 'E2' }, */
+
+  // E2.5 Otros
+  {
+    name: 'e2_marcaModelo',
+    label: 'MARCA Y MODELO',
+    placeholder: 'Opcional',
+    type: 'equipment-autocomplete',
+    equipmentType: 'baterias',
+    mapping: {
+      marcaModelo: 'e2_marcaModelo',
+      tipoBateria: 'e2_tipoDeBateria',
+      tensionNominal: 'e2_tensionNominal',
+      profundidadDescarga: 'e2_profundidadDescarga',
+      tensionMaxima: 'e2_tensionMaxima',
+      tensionMinima: 'e2_tensionMinima',
+      energiaTotal: 'e2_energiaTotal',
+      potenciaMaxima: 'e2_potenciaMaximaSalida',
+      maximoPicoPotencia: 'e2_maximoPicoDePotencia'
+    },
+    subsection: 'E2',
+    group: 'Bateria'
+  },
+  { name: 'e2_tipoDeBateria', label: 'TIPO DE BATERÍA', placeholder: 'Opcional', type: 'text', subsection: 'E2', group: 'Bateria' },
+  { name: 'e2_tensionNominal', label: 'TENSIÓN NOMINAL (V)', placeholder: 'Opcional', type: 'text', subsection: 'E2', fullWidth: true, group: 'Bateria' },
+  { name: 'e2_profundidadDescarga', label: 'PROFUNDIDAD DE DESCARGA', placeholder: 'Opcional', type: 'text', subsection: 'E2', fullWidth: true, group: 'Bateria' },
+  { name: 'e2_tensionMaxima', label: 'TENSIÓN MÁXIMA (V)', placeholder: 'Opcional', type: 'text', subsection: 'E2', group: 'Bateria' },
+  { name: 'e2_tensionMinima', label: 'TENSIÓN MÍNIMA (V)', placeholder: 'Opcional', type: 'text', subsection: 'E2', group: 'Bateria' },
+  { name: 'e2_energiaTotal', label: 'ENERGÍA TOTAL ', placeholder: 'Opcional', type: 'text', subsection: 'E2', group: 'Bateria' },
+  { name: 'e2_potenciaMaximaSalida', label: 'POTENCIA MÁXIMA SALIDA', placeholder: 'Opcional', type: 'text', subsection: 'E2', group: 'Bateria' },
+  { name: 'e2_maximoPicoDePotencia', label: 'MÁXIMO PICO DE POTENCIA', placeholder: 'Opcional', type: 'text', subsection: 'E2', group: 'Bateria' },
+
+  // 2.6 Protecciones Externas
+  { name: 'e2_intensidadNominalInterruptor', label: 'INTENSIDAD NOMINAL DEL INTERRUPTOR GENERAL, In (A)', placeholder: 'Ej: 25', type: 'text', subsection: 'E2' },
+  { name: 'e2_poderCorteInterruptor', label: 'PODER DE CORTE DEL INTERRUPTOR GENERAL (kA)', placeholder: 'Ej: 6', type: 'text', subsection: 'E2' },
+
+  /* // E2.6 Información de la Demanda
+  { name: 'e2_potenciaMaximaDemanda', label: 'MARCA Y MODELO', placeholder: 'Ej: 5000', type: 'text', subsection: 'E2' },
+  { name: 'e2_periodicidadDemanda', label: 'PERIODICIDAD', placeholder: 'Ej: Diaria', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaMediaMensual', label: 'ENERGÍA DIARIA MEDIA MENSUAL (Wh/día)', placeholder: 'Ej: 15500', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaEnero', label: 'ENE', placeholder: 'Ej: 15.5', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaFebrero', label: 'FEB', placeholder: 'Ej: 16.2', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaMarzo', label: 'MAR', placeholder: 'Ej: 18.5', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaAbril', label: 'ABR', placeholder: 'Ej: 20.1', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaMayo', label: 'MAY', placeholder: 'Ej: 22.3', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaJunio', label: 'JUN', placeholder: 'Ej: 23.8', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaJulio', label: 'JUL', placeholder: 'Ej: 24.5', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaAgosto', label: 'AGO', placeholder: 'Ej: 24.1', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaSeptiembre', label: 'SEP', placeholder: 'Ej: 21.5', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaOctubre', label: 'OCT', placeholder: 'Ej: 18.9', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaNoviembre', label: 'NOV', placeholder: 'Ej: 16.3', type: 'text', subsection: 'E2' },
+  { name: 'e2_energiaDiariaDiciembre', label: 'DIC', placeholder: 'Ej: 14.8', type: 'text', subsection: 'E2' },
+ */
+  // ========== SECCIÓN F: MEDIDAS DE PROTECCIÓN EMPLEADAS ==========
+  /*   { name: 'f_medidaContactoDirecto', label: 'CONTACTOS DIRECTOS - Tipo de Medida', placeholder: 'Ej: Conductores aislados y canaletas', type: 'text', subsection: 'F' },
+    { name: 'f_parteContactoDirecto', label: 'CONTACTOS DIRECTOS - Parte de la Instalación', placeholder: 'Ej: CGMP', type: 'text', subsection: 'F' },
+  
+    { name: 'f_medidaContactoIndirecto', label: 'CONTACTOS INDIRECTOS - Tipo de Medida', placeholder: 'Ej: Interruptor diferencial', type: 'text', subsection: 'F' },
+    { name: 'f_parteContactoIndirecto', label: 'CONTACTOS INDIRECTOS - Parte de la Instalación', placeholder: 'Ej: CGMP', type: 'text', subsection: 'F' },
+  
+    { name: 'f_medidaPuntoCaliente', label: 'EFECTO DEL PUNTO CALIENTE - Tipo de Medida', placeholder: 'Ej: 3 Diodos bypass', type: 'text', subsection: 'F' },
+    { name: 'f_partePuntoCaliente', label: 'EFECTO DEL PUNTO CALIENTE - Parte de la Instalación', placeholder: 'Ej: Módulo FV', type: 'text', subsection: 'F' },
+  
+    { name: 'f_medidaSobretensiones', label: 'SOBRETENSIONES - Tipo de Medida', placeholder: 'Ej: Descargador', type: 'text', subsection: 'F' },
+    { name: 'f_parteSobretensiones', label: 'SOBRETENSIONES - Parte de la Instalación', placeholder: 'Ej: CGMP', type: 'text', subsection: 'F' },
+  
+    { name: 'f_medidaExplosion', label: 'RIESGO DE EXPLOSIÓN - Tipo de Medida', placeholder: 'Opcional (solo aisladas con baterías)', type: 'text', subsection: 'F' },
+    { name: 'f_parteExplosion', label: 'RIESGO DE EXPLOSIÓN - Parte de la Instalación', placeholder: 'Opcional', type: 'text', subsection: 'F' },
+  
+    { name: 'f_medidaCorrosion', label: 'RIESGO DE CORROSIÓN - Tipo de Medida', placeholder: 'Opcional (solo aisladas con baterías)', type: 'text', subsection: 'F' },
+    { name: 'f_parteCorrosion', label: 'RIESGO DE CORROSIÓN - Parte de la Instalación', placeholder: 'Opcional', type: 'text', subsection: 'F' },
+  
+    { name: 'f_otrasProtecciones', label: 'OTRAS MEDIDAS', placeholder: 'Indicar cuales', type: 'textarea', subsection: 'F', fullWidth: true },
+   */
+  // ========== SECCIÓN G: CARACTERÍSTICAS DE LÍNEAS Y CIRCUITOS ==========
+  /*   { name: 'g_generadorReguladorPotencia', label: 'Generador FV-Regulador: Potencia (kW)', placeholder: 'Ej: 5.35', type: 'text', subsection: 'G' },
+    { name: 'g_generadorReguladorLongitud', label: 'Generador FV-Regulador: Longitud (m)', placeholder: 'Ej: 15', type: 'text', subsection: 'G' },
+    { name: 'g_generadorReguladorSeccion', label: 'Generador FV-Regulador: Material/Sección (mm²)', placeholder: 'Ej: 10', type: 'text', subsection: 'G' },
+    { name: 'g_generadorReguladorIntensidad', label: 'Generador FV-Regulador: Intensidad Admisible (A)', placeholder: 'Ej: 10.84', type: 'text', subsection: 'G' },
+    { name: 'g_generadorReguladorCaidaTension', label: 'Generador FV-Regulador: Caída de Tensión (%)', placeholder: 'Ej: 1.2', type: 'text', subsection: 'G' },
+   */
+  /* { name: 'g_reguladorBateriaPotencia', label: 'Regulador-Batería: Potencia (kW)', placeholder: 'Ej: 5.35', type: 'text', subsection: 'G' },
+  { name: 'g_reguladorBateriaLongitud', label: 'Regulador-Batería: Longitud (m)', placeholder: 'Ej: 5', type: 'text', subsection: 'G' },
+  { name: 'g_reguladorBateriaSeccion', label: 'Regulador-Batería: Material/Sección (mm²)', placeholder: 'Ej: 6', type: 'text', subsection: 'G' },
+  { name: 'g_reguladorBateriaIntensidad', label: 'Regulador-Batería: Intensidad Admisible (A)', placeholder: 'Ej: 49', type: 'text', subsection: 'G' },
+  { name: 'g_reguladorBateriaCaidaTension', label: 'Regulador-Batería: Caída de Tensión (%)', placeholder: 'Ej: < 1.5', type: 'text', subsection: 'G' },
+   */
+  /*  { name: 'g_reguladorInversorPotencia', label: 'Regulador-Inversor: Potencia (kW)', placeholder: 'Ej: 3000', type: 'text', subsection: 'G' },
+   { name: 'g_reguladorInversorLongitud', label: 'Regulador-Inversor: Longitud (m)', placeholder: 'Ej: 5', type: 'text', subsection: 'G' },
+   { name: 'g_reguladorInversorSeccion', label: 'Regulador-Inversor: Material/Sección (mm²)', placeholder: 'Ej: 6', type: 'text', subsection: 'G' },
+   { name: 'g_reguladorInversorIntensidad', label: 'Regulador-Inversor: Intensidad Admisible (A)', placeholder: 'Ej: 49', type: 'text', subsection: 'G' },
+   { name: 'g_reguladorInversorCaidaTension', label: 'Regulador-Inversor: Caída de Tensión (%)', placeholder: 'Ej: < 1.5', type: 'text', subsection: 'G' },
+    */
+  { name: 'g_bateriaDiRectaInversorPotencia', label: 'Batería-Inversor (directo): Potencia (kW)', placeholder: 'Ej: 3000', type: 'text', subsection: 'G' },
+  /*   { name: 'g_bateriaDiRectaInversorLongitud', label: 'Batería-Inversor (directo): Longitud (m)', placeholder: 'Ej: 5', type: 'text', subsection: 'G' },
+    { name: 'g_bateriaDiRectaInversorSeccion', label: 'Batería-Inversor (directo): Material/Sección (mm²)', placeholder: 'Ej: 6', type: 'text', subsection: 'G' },
+    { name: 'g_bateriaDiRectaInversorIntensidad', label: 'Batería-Inversor (directo): Intensidad Admisible (A)', placeholder: 'Ej: 49', type: 'text', subsection: 'G' },
+    { name: 'g_bateriaDiRectaInversorCaidaTension', label: 'Batería-Inversor (directo): Caída de Tensión (%)', placeholder: 'Ej: < 1.5', type: 'text', subsection: 'G' },
+     */
+  { name: 'g_generadorDirectoInversorPotencia', label: 'Generador-Inversor (directo): Potencia (kW)', placeholder: 'Ej: 5.35', type: 'text', subsection: 'G' },
+  /*  { name: 'g_generadorDirectoInversorLongitud', label: 'Generador-Inversor (directo): Longitud (m)', placeholder: 'Ej: 10', type: 'text', subsection: 'G' },
+   { name: 'g_generadorDirectoInversorSeccion', label: 'Generador-Inversor (directo): Material/Sección (mm²)', placeholder: 'Ej: 6', type: 'text', subsection: 'G' },
+   { name: 'g_generadorDirectoInversorIntensidad', label: 'Generador-Inversor (directo): Intensidad Admisible (A)', placeholder: 'Ej: 49', type: 'text', subsection: 'G' },
+   { name: 'g_generadorDirectoInversorCaidaTension', label: 'Generador-Inversor (directo): Caída de Tensión (%)', placeholder: 'Ej: < 1.5', type: 'text', subsection: 'G' },
+    */
+  { name: 'g_inversorRedPotencia', label: 'Inversor-Red (interconectadas): Potencia (kW)', placeholder: 'Ej: 3000', type: 'text', subsection: 'G' },
+  /*  { name: 'g_inversorRedLongitud', label: 'Inversor-Red (interconectadas): Longitud (m)', placeholder: 'Ej: 5', type: 'text', subsection: 'G' },
+   { name: 'g_inversorRedSeccion', label: 'Inversor-Red (interconectadas): Material/Sección (mm²)', placeholder: 'Ej: 6', type: 'text', subsection: 'G' },
+   { name: 'g_inversorRedIntensidad', label: 'Inversor-Red (interconectadas): Intensidad Admisible (A)', placeholder: 'Ej: 44', type: 'text', subsection: 'G' },
+   { name: 'g_inversorRedCaidaTension', label: 'Inversor-Red (interconectadas): Caída de Tensión (%)', placeholder: 'Ej: < 1.5', type: 'text', subsection: 'G' },
+  */
+
+  // ========== SECCIÓN IMAGEN: IMÁGENES DE PLANOS CON DESCRIPCIONES ==========
+  { name: 'otros_imagenPlanoSituacion', label: 'PLANO DE SITUACIÓN', type: 'file', accept: 'image/*,.pdf', description: 'Plano de situación geográfica de la instalación.', subsection: 'IMAGEN' },
+  { name: 'otros_imagenPlanoEmplazamiento', label: 'PLANO DE EMPLAZAMIENTO', type: 'file', accept: 'image/*,.pdf', description: 'Plano de emplazamiento de la instalación.', subsection: 'IMAGEN' },
+  { name: 'otros_PlanoCubiertaNuevo', label: 'PLANO DE CUBIERTA NUEVO', type: 'file', accept: 'image/*,.pdf', description: 'Plano de detalle de la instalación fotovoltaica en cubierta.', subsection: 'IMAGEN' },
+  { name: 'h_esquemaUnifilar', label: 'ESQUEMA UNIFILAR (Archivo)', type: 'file', accept: 'image/*,.pdf', subsection: 'IMAGEN', fullWidth: true, },
+  { name: 'firma', label: 'FIRMA (Archivo)', type: 'file', accept: 'image/*,.pdf', subsection: 'IMAGEN', fullWidth: true, },
+
+  // ========== SECCIÓN: LEGALIZACION ==========
+  // Campos de legalización: súministro, distribuidora, protecciones
+  { name: 'instalacion', label: 'tipo de instalación', placeholder: 'Seleccionar tipo...', type: 'select', options: ['nueva', 'ampliacion', 'modificacion'], subsection: 'LEGALIZACION' },
+  { name: 'registro_instalacion', label: 'Registro Instalación', placeholder: 'Ej: REG-2025-001-PRINCIPAL', type: 'text', subsection: 'LEGALIZACION' },
+  { name: 'terminacioAnual', label: 'Terminación Anual', placeholder: 'Ej: 2025', type: 'select', options: ['26', '27', '28'], subsection: 'LEGALIZACION' },
+  { name: 'almacenamiento', label: 'Almacenamiento', placeholder: 'Seleccionar tipo...', type: 'select', options: ['con almacenamiento', 'sin almacenamiento'], subsection: 'LEGALIZACION' },
+  { name: 'observaciones', label: 'Observaciones', placeholder: 'Selecciona una opción', type: 'select', options: [{ label: 'con batería', value: 'Se trata de una instalación de generación para autoconsumo FV de B.T.con baterias conectado a la red con excedentes acogido a compensación' }, { label: 'sin batería', value: 'Se trata de una instalación de generación para autoconsumo FV de B.T. conectado a la red con excedentes acogido a compensación' }], subsection: 'LEGALIZACION' },
+  { name: 'usoDestino', label: 'Uso y Destino', placeholder: 'Ej: Autoconsumo para vivienda', type: 'select', options: ['doméstico', 'negocio'], subsection: 'LEGALIZACION' },
+  { name: 'figuraTecnicoCompetente', label: 'Técnico Competente', type: 'checkbox', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'figuraInstaladorHabilitado', label: 'Instalador Habilitado', type: 'checkbox', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'figuraResponsableTecnico', label: 'Responsable Técnico', type: 'checkbox', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'instalacion1', label: 'Instalación1', placeholder: 'Seleccionar tipo...', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'e2_potenciaNominalInversores', label: 'POTENCIA NOMINAL TOTAL EN INVERSORES (kW)', placeholder: 'Ej: 5.5', type: 'text', subsection: 'LEGALIZACION' },
+  { name: 'cups', label: 'CUPS', placeholder: 'Ej: ES123456789012345678', type: 'text', fullWidth: true, subsection: 'LEGALIZACION' },
+  { name: 'empresaDistribuidora', label: 'Empresa Distribuidora', placeholder: 'Ej: Endesa, Iberdrola', type: 'text', subsection: 'LEGALIZACION' },
+  { name: 'intensidadNominal', label: 'Intensidad nominal', placeholder: 'Ej: 30A / 63A', type: 'text', subsection: 'LEGALIZACION' },
+  { name: 'sensibilidadDiferencial', label: 'Sensibilidad (mA)', placeholder: 'Ej: 30', type: 'text', subsection: 'LEGALIZACION' },
+  { name: 'seccionFase', label: 'Sección Fase', placeholder: '', type: 'text', subsection: 'LEGALIZACION' },
+  { name: 'fechaElaboracion', label: 'Fecha de Elaboración Proyecto', placeholder: 'Ej: 16/10/2025', type: 'date', subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  { name: 'directorDeObra', label: 'Director de Obra', placeholder: 'Ej: Juan García López', type: 'select', options: ['Eduardo Rafael Rivera Cabezas', '   '], subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  {
+    name: 'codigoDirectorio', label: 'Código Directorio (Ciudad)', placeholder: 'Selecciona una ciudad...', type: 'select', options: [
+      { label: 'Almeria', value: 'A01041434' },
+      { label: 'Cadiz', value: 'A01041435' },
+      { label: 'Cordoba', value: 'A01041436' },
+      { label: 'Granada', value: 'A01041437' },
+      { label: 'Huelva', value: 'A01041438' },
+      { label: 'Jaen', value: 'A01041440' },
+      { label: 'Malaga', value: 'A01041442' },
+      { label: 'Sevilla', value: 'A01041444' },
+      { name: 'nombreFirma', label: 'Nombre Firma', placeholder: 'Ej: Juan García López', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+    ], subsection: 'LEGALIZACION', group: 'anexo III'
+  },
+
+  { name: 'titulacion', label: 'Titulación', placeholder: '', type: 'select', options: ['', 'Ingeniero Técnico Industrial'], subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  { name: 'colegioOficial', label: 'Colegio Oficial', placeholder: '', type: 'select', options: ['    ', 'COIIAOC'], subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  { name: 'numeroColegiado', label: 'Número Colegiado', placeholder: '', type: 'select', options: [' ', '4654'], subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  { name: 'organismoControl', label: 'Organismo de Control', placeholder: '', type: 'text', subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  { name: 'numeroNotificacion', label: 'Número Notificación', placeholder: '', type: 'text', subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  { name: 'referenciaFechaInspeccion', label: 'Referencia Fecha Inspección', placeholder: '', type: 'text', subsection: 'LEGALIZACION', group: 'Con proyecto' },
+  { name: 'nombreRepresentanteEntidad', label: 'Nombre del Representante de la Entidad', placeholder: 'Ej: Juan Pérez', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'telefonoRepresentanteEntidad', label: 'Teléfono del Representante de la Entidad', placeholder: 'Ej: 600123456', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'correoElectronicoRepresentanteEntidad', label: 'Correo Electrónico del Representante de la Entidad', placeholder: 'Ej: correo@ejemplo.com', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'dniRepresentanteEntidad', label: 'DNI del Representante de la Entidad', placeholder: 'Ej: 12345678A', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'denominacionEstablecimiento', label: 'Denominación del Establecimiento', placeholder: 'Ej: Bar Los Amigos', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+  { name: 'nifEstablecimiento', label: 'NIF del Establecimiento', placeholder: 'Ej: B12345678', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+  // ========== SECCIÓN ACEPTACION: ACEPTACIÓN Y CONFORMIDAD ==========
+  { name: 'codigoEni', label: 'Código ENI', placeholder: 'Ej: ENI12345', type: 'text', subsection: 'ACEPTACION' },
+  { name: 'expedienteEco', label: 'Expediente ECO', placeholder: 'Ej: ECO12345', type: 'text', subsection: 'ACEPTACION' },
+  { name: 'e2_potenciaNominalInversores', label: 'POTENCIA NOMINAL TOTAL EN INVERSORES (kW)', placeholder: 'Ej: 5.5', type: 'text', subsection: 'ACEPTACION' },
+  { name: 'importeSubvencionResultante', label: 'Importe de la Subvención', placeholder: 'Ej: 1500 €', type: 'text', subsection: 'ACEPTACION' },
+  {
+    name: 'edificioVivienda', label: 'Edificio o Vivienda', placeholder: 'Ej: selecciona una opción', type: 'select', options: [
+      { label: 'Edificio', value: 'rehabilitacion a nivel de edificio' },
+      { label: 'Vivienda', value: 'mejora de la eficiencia energetica en viviendas' },
+    ], subsection: 'ACEPTACION'
+  },
+  { name: 'presupuestoInicial', label: 'Presupuesto Inicial', type: 'text', subsection: 'ACEPTACION' },
+  { name: 'diaAceptacion', label: 'Día Aceptación', placeholder: 'Ej: 15', type: 'text', subsection: 'ACEPTACION' },
+  { name: 'mesAceptacion', label: 'Mes Aceptación', placeholder: 'Ej: 10', type: 'text', subsection: 'ACEPTACION' },
+  { name: 'anioAceptacion', label: 'Año Aceptación', placeholder: 'Ej: 2024', type: 'text', subsection: 'ACEPTACION' },
+  // ========== SUBSECCIÓN JUSTIFICACIÓN ==========
+  { name: 'edificioViviendaJUS', label: 'Tipo de Edificio/Vivienda', type: 'select', options: ['edificio', 'vivienda'], subsection: 'JUSTIFICACION' },
+  { name: 'l3l4', label: 'Línea de Subvención', type: 'select', options: ['Línea 3', 'Línea 4'], placeholder: 'ej: Línea 3', subsection: 'JUSTIFICACION' },
+  {
+    name: 'parrafoTexto', label: 'Párrafo Introducción', type: 'select', options: [
+      { label: 'Línea 3', value: 'Estas ayudas tienen por objeto la financiación de obras o actuaciones en los edificios de uso predominante residencial en las que se obtenga una mejora acreditada de la eficiencia energética, con especial atención a la envolvente edificatoria en edificios de tipología residencial colectiva, incluyendo sus viviendas, y en las viviendas unifamiliares.' },
+      { label: 'Línea 4', value: 'Estas ayudas tienen por objeto la financiación de actuaciones u obras de mejora de la eficiencia energética en las viviendas, ya sean unifamiliares o pertenecientes a edificios plurifamiliares' }
+    ], subsection: 'JUSTIFICACION', fullWidth: true
+  },
+
+  { name: 'totalCantidadJustificada', label: 'Total Cantidad Justificada', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'presupuestoInicial', label: 'Presupuesto Inicial', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'inversionRealizada', label: 'Inversión Realizada (Factura)', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'desviacion', label: 'Desviación (con IVA si es subvencionable)', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'diaInicio', label: 'Día Inicio', placeholder: 'Ej: 03', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'mesInicio', label: 'Mes Inicio', placeholder: 'Ej: 10', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'anioInicio', label: 'Año Inicio', placeholder: 'Ej: 2023', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'diaFirmaJustificacion', label: 'Día Firma Justificación', placeholder: 'Ej: 08', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'mesFirmaJustificacion', label: 'Mes Firma Justificación', placeholder: 'Ej: 09', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'anioFirmaJustificacion', label: 'Año Firma Justificación', placeholder: 'Ej: 2025', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'nombreRepresentanteEntidad', label: 'Nombre del Representante de la Entidad', placeholder: 'Ej: Juan Pérez', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'dniRepresentanteEntidad', label: 'DNI del Representante de la Entidad', placeholder: 'Ej: 12345678A', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'nifEmpresa', label: 'NIF Empresa', placeholder: 'Ej: B12345678', type: 'text', subsection: 'JUSTIFICACION' },
+  { name: 'tipoActuacion', label: 'Actua en calidad de...', type: 'text', placeholder: 'Ej: Propietario', subsection: 'JUSTIFICACION' },
+
+
+  // ========== SUBSECCIÓN MEMORIA FV + AEROTERMIA ==========
+  { name: 'tipoEdificioFvAerotermia', label: 'Tipo de Edificio', type: 'select', options: [{ label: 'Edificio', value: 'EDIFICIO DE VIVIENDA UNIFAMILIAR' }, { label: 'Vivienda', value: 'VIVIENDAS' }], placeholder: 'ej: Edificio', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'textoOpcional1', label: 'Texto Opcional 1', placeholder: 'Ej: Texto opcional', type: 'select', options: [{ label: 'Línea 3', value: 'Estas ayudas tienen por objeto la financiación de actuaciones u obras de mejora de la eficiencia energética en edificios, en concreto en una vivienda unifamiliar no perteneciente a un bloque de viviendas ' }, { label: 'Línea 4', value: 'Estas ayudas tienen por objeto la financiación de actuaciones u obras de mejora de la eficiencia energética en las viviendas, ya sean unifamiliares o pertenecientes a edificios plurifamiliares' }], fullWidth: true, subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  /*     {name: 'textoAerotermia1', label: 'Texto Aerotermia 1', placeholder: 'Ej: Texto aerotermia 1', type: 'select', options: [{ label: 'Línea 3', value: 'En el caso de que la instalación incluya una solución de aerotermia, se incluirá un párrafo adicional en la memoria justificativa que describa brevemente la solución adoptada y su contribución a la mejora de la eficiencia energética del edificio.' }, { label: 'Línea 4', value: 'En el caso de que la instalación incluya una solución de aerotermia, se incluirá un párrafo adicional en la memoria justificativa que describa brevemente la solución adoptada y su contribución a la mejora de la eficiencia energética del edificio.' }], fullWidth: true, subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' }, */
+  { name: 'potenciaBomba', label: 'Potencia Bomba (kW) (Aerotermia)', placeholder: 'Ej: 1.8', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'depositoLitros', label: 'Depósito (L) (Aerotermia)', placeholder: 'Ej: 200', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'potenciaTermica', label: 'Potencia Térmica (kW) (Aerotermia)', placeholder: 'Ej: 8.5', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'resistenciaElectrica', label: 'Resistencia Eléctrica (kW) (Aerotermia)', placeholder: 'Ej: 2.0', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'potenciaTotal', label: 'Potencia Total (kW) (Aerotermia)', placeholder: 'Ej: 10.5', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'tipoSoporte', label: 'Tipo de Soporte', type: 'select', options: [{ label: 'PLANA', value: 'PLANA' }, { label: 'INCLINADA', value: 'INCLINADA' }, { label: 'AMBAS', value: 'PLANA E INCLINADA' }], subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  /* { name: 'fechaConclusionAnio', label: 'Año Conclusión', placeholder: 'Ej: 2025', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'fechaConclusionDia', label: 'Día Conclusión', placeholder: 'Ej: 15', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'fechaConclusionMes', label: 'Mes Conclusión', placeholder: 'Ej: 03', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' }, */
+  /* { name: 'importeCertificacion', label: 'Importe Certificación', placeholder: 'Ej: 5000.00', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'importeOtrosCostes', label: 'Importe Otros Costes', placeholder: 'Ej: 500.00', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'importeTotal', label: 'Importe Total', placeholder: 'Ej: 5500.00', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' }, */{ name: 'importeTotalSinIva', label: 'Importe Total Sin IVA (€)', placeholder: 'Ej: 5500.00', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'coincidencia', label: 'Coincidencia con presupuesto', type: 'select', options: ['No', ''], subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'inversionRealizada', label: 'Factura Total Con IVA (€)', placeholder: 'Ej: 6655.00', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'porcentajeMejoraEnergeticaAcreditado', label: 'Porcentaje Mejora Energética Acreditado (%)', placeholder: 'Ej: 64.22', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'porcentajeSubvencionable', label: 'Porcentaje Subvencionable (%)', placeholder: 'Ej: 80.00', type: 'select', options: ['40%', '65%', '80%'], subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'importeSubvencionResultante', label: 'Importe Subvención Resultante (€)', placeholder: 'Ej: 9920.00', type: 'text', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+  { name: 'aerotermia', label: 'Incluir sección de Aerotermia 1', type: 'checkbox', subsection: 'JUSTIFICACION', group: 'Memoria FV+Aer' },
+
+  // ========== SUBSECCIÓN JUSTIFICACIÓN: Pedidos y Facturas ==========
+  // Factura 1
+  { name: 'numeroFactura1', label: 'Nº Factura', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 1' },
+  { name: 'fechaFactura1', label: 'Fecha Factura', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 1' },
+  { name: 'cf1', label: 'CF', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 1' },
+  { name: 'acreedor1', label: 'Acreedor', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 1' },
+  { name: 'concepto1', label: 'Concepto', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 1' },
+  { name: 'fechaPago1', label: 'Fecha Pago', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 1' },
+  { name: 'importe1', label: 'Importe', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 1' },
+  // Factura 2
+  { name: 'numeroFactura2', label: 'Nº Factura', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 2' },
+  { name: 'fechaFactura2', label: 'Fecha Factura', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 2' },
+  { name: 'cf2', label: 'CF', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 2' },
+  { name: 'acreedor2', label: 'Acreedor', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 2' },
+  { name: 'concepto2', label: 'Concepto', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 2' },
+  { name: 'fechaPago2', label: 'Fecha Pago', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 2' },
+  { name: 'importe2', label: 'Importe', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 2' },
+  // Factura 3
+  { name: 'numeroFactura3', label: 'Nº Factura', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 3' },
+  { name: 'fechaFactura3', label: 'Fecha Factura', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 3' },
+  { name: 'cf3', label: 'CF', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 3' },
+  { name: 'acreedor3', label: 'Acreedor', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 3' },
+  { name: 'concepto3', label: 'Concepto', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 3' },
+  { name: 'fechaPago3', label: 'Fecha Pago', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 3' },
+  { name: 'importe3', label: 'Importe', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 3' },
+  // Factura 4
+  { name: 'numeroFactura4', label: 'Nº Factura', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 4' },
+  { name: 'fechaFactura4', label: 'Fecha Factura', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 4' },
+  { name: 'cf4', label: 'CF', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 4' },
+  { name: 'acreedor4', label: 'Acreedor', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 4' },
+  { name: 'concepto4', label: 'Concepto', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 4' },
+  { name: 'fechaPago4', label: 'Fecha Pago', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 4' },
+  { name: 'importe4', label: 'Importe', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 4' },
+  // Factura 5
+  { name: 'numeroFactura5', label: 'Nº Factura', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 5' },
+  { name: 'fechaFactura5', label: 'Fecha Factura', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 5' },
+  { name: 'cf5', label: 'CF', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 5' },
+  { name: 'acreedor5', label: 'Acreedor', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 5' },
+  { name: 'concepto5', label: 'Concepto', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 5' },
+  { name: 'fechaPago5', label: 'Fecha Pago', type: 'date', subsection: 'JUSTIFICACION', group: 'Factura 5' },
+  { name: 'importe5', label: 'Importe', type: 'text', subsection: 'JUSTIFICACION', group: 'Factura 5' },
+  // Pedido 1
+  { name: 'pedido1Concepto', label: 'Concepto', placeholder: 'Ej: Módulos solares', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+  { name: 'pedido1Proveedor', label: 'Proveedor', placeholder: 'Ej: Empresa XYZ', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+  { name: 'pedido1IdOferta', label: 'Id. Oferta (presupuesto)', placeholder: 'Ej: OF-2025-001', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+  { name: 'pedido1FechaOferta', label: 'Fecha Oferta (presupuesto)', placeholder: 'Ej: 15/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+  { name: 'pedido1ImporteOferta', label: 'Importe Oferta (€) (presupuesto)', placeholder: 'Ej: 5000', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+  { name: 'pedido1IdPedido', label: 'Id. Pedido (factura)', placeholder: 'Ej: PED-2025-001', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+  { name: 'pedido1FechaPedido', label: 'Fecha Pedido (factura)', placeholder: 'Ej: 16/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+  { name: 'pedido1ImportePedido', label: 'Importe Pedido (€) (factura)', placeholder: 'Ej: 5000', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 1' },
+
+  // Pedido 2
+  { name: 'pedido2Concepto', label: 'Concepto', placeholder: 'Ej: Inversor solar', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  { name: 'pedido2Proveedor', label: 'Proveedor', placeholder: 'Ej: Empresa ABC', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  { name: 'pedido2IdOferta', label: 'Id. Oferta (presupuesto)', placeholder: 'Ej: OF-2025-002', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  { name: 'pedido2FechaOferta', label: 'Fecha Oferta (presupuesto)', placeholder: 'Ej: 16/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  { name: 'pedido2ImporteOferta', label: 'Importe Oferta (€) (presupuesto)', placeholder: 'Ej: 2500', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  { name: 'pedido2IdPedido', label: 'Id. Pedido (factura)', placeholder: 'Ej: PED-2025-002', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  { name: 'pedido2FechaPedido', label: 'Fecha Pedido (factura)', placeholder: 'Ej: 17/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  { name: 'pedido2ImportePedido', label: 'Importe Pedido (€) (factura)', placeholder: 'Ej: 2500', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 2' },
+  /*   // Pedido 3
+    { name: 'pedido3Concepto', label: 'Concepto', placeholder: 'Ej: Estructura de montaje', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+    { name: 'pedido3Proveedor', label: 'Proveedor', placeholder: 'Ej: Empresa DEF', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+    { name: 'pedido3IdOferta', label: 'Id. Oferta', placeholder: 'Ej: OF-2025-003', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+    { name: 'pedido3FechaOferta', label: 'Fecha Oferta', placeholder: 'Ej: 17/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+    { name: 'pedido3ImporteOferta', label: 'Importe Oferta (€)', placeholder: 'Ej: 1500', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+    { name: 'pedido3IdPedido', label: 'Id. Pedido', placeholder: 'Ej: PED-2025-003', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+    { name: 'pedido3FechaPedido', label: 'Fecha Pedido', placeholder: 'Ej: 18/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+    { name: 'pedido3ImportePedido', label: 'Importe Pedido (€)', placeholder: 'Ej: 1500', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 3' },
+  
+    // Pedido 4
+    { name: 'pedido4Concepto', label: 'Concepto', placeholder: 'Ej: Materiales para instalación', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+    { name: 'pedido4Proveedor', label: 'Proveedor', placeholder: 'Ej: Empresa GHI', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+    { name: 'pedido4IdOferta', label: 'Id. Oferta', placeholder: 'Ej: OF-2025-004', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+    { name: 'pedido4FechaOferta', label: 'Fecha Oferta', placeholder: 'Ej: 18/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+    { name: 'pedido4ImporteOferta', label: 'Importe Oferta (€)', placeholder: 'Ej: 1000', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+    { name: 'pedido4IdPedido', label: 'Id. Pedido', placeholder: 'Ej: PED-2025-004', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+    { name: 'pedido4FechaPedido', label: 'Fecha Pedido', placeholder: 'Ej: 19/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+    { name: 'pedido4ImportePedido', label: 'Importe Pedido (€)', placeholder: 'Ej: 1000', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 4' },
+  
+    // Pedido 5
+    { name: 'pedido5Concepto', label: 'Concepto', placeholder: 'Ej: Mano de obra instalación', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+    { name: 'pedido5Proveedor', label: 'Proveedor', placeholder: 'Ej: Empresa JKL', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+    { name: 'pedido5IdOferta', label: 'Id. Oferta', placeholder: 'Ej: OF-2025-005', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+    { name: 'pedido5FechaOferta', label: 'Fecha Oferta', placeholder: 'Ej: 19/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+    { name: 'pedido5ImporteOferta', label: 'Importe Oferta (€)', placeholder: 'Ej: 800', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+    { name: 'pedido5IdPedido', label: 'Id. Pedido', placeholder: 'Ej: PED-2025-005', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+    { name: 'pedido5FechaPedido', label: 'Fecha Pedido', placeholder: 'Ej: 20/01/2025', type: 'date', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+    { name: 'pedido5ImportePedido', label: 'Importe Pedido (€)', placeholder: 'Ej: 800', type: 'text', subsection: 'JUSTIFICACION', group: 'Pedido 5' },
+   */
+  // --- SECCIÓN PRESENTACIÓN (PLAYWRIGHT) ---
+  { name: 'cod_delegacion', label: 'Delegación Territorial', type: 'select', subsection: 'PRESENTACIÓN', group: 'Datos Titular (Robot)', value: '41', options: [{ value: '04', label: 'ALMERÍA' }, { value: '11', label: 'CÁDIZ' }, { value: '14', label: 'CÓRDOBA' }, { value: '18', label: 'GRANADA' }, { value: '21', label: 'HUELVA' }, { value: '23', label: 'JAÉN' }, { value: '29', label: 'MÁLAGA' }, { value: '41', label: 'SEVILLA' }] },
+  { name: 'tipo_documento_presentador', label: 'Tipo Documento', type: 'select', subsection: 'PRESENTACIÓN', group: 'Datos Titular (Robot)', value: 'NIF', options: [{ value: 'NIF', label: 'NIF - Persona Física' }, { value: 'NIE', label: 'NIE - Extranjero' }, { value: 'CIF', label: 'CIF - Persona Jurídica' }] },
+  { name: 'nif_presentador', label: 'NIF/CIF Titular', type: 'text', subsection: 'PRESENTACIÓN', group: 'Datos Titular (Robot)', mapFrom: 'nifCif' },
+  { name: 'sexo_presentador', label: 'Sexo Titular', type: 'select', subsection: 'PRESENTACIÓN', group: 'Datos Titular (Robot)', value: 'M', options: [{ value: 'M', label: 'Hombre/Masculino' }, { value: 'F', label: 'Mujer/Femenino' }] },
+  { name: 'nombre_presentador', label: 'Nombre Titular', type: 'text', subsection: 'PRESENTACIÓN', group: 'Datos Titular (Robot)', mapFrom: 'apellidosNombre' },
+  { name: 'apellido1_presentador', label: 'Primer Apellido Titular', type: 'text', subsection: 'PRESENTACIÓN', group: 'Datos Titular (Robot)' },
+  { name: 'apellido2_presentador', label: 'Segundo Apellido Titular', type: 'text', subsection: 'PRESENTACIÓN', group: 'Datos Titular (Robot)' },
+
+  { name: 'tipo_via_presentador', label: 'Tipo de Vía', type: 'select', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', value: 'CL', options: tipoViaOptions },
+  { name: 'nombre_via_presentador', label: 'Nombre de la Vía', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', mapFrom: 'emplazamientoCalle' },
+  { name: 'tipo_numeracion_presentador', label: 'Tipo Numeración', type: 'select', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', value: 'NUM', options: [{ value: 'NUM', label: 'Número' }, { value: 'KM', label: 'Kilómetro' }, { value: 'SN', label: 'Sin Número' }] },
+  { name: 'numero_presentador', label: 'Número / Km', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', mapFrom: 'numero' },
+  { name: 'calificador_numero_presentador', label: 'Calificador (Bis, Duplicado...)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)' },
+  { name: 'bloque_presentador', label: 'Bloque', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)' },
+  { name: 'escalera_presentador', label: 'Escalera', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)' },
+  { name: 'piso_presentador', label: 'Piso', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)' },
+  { name: 'puerta_presentador', label: 'Puerta', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)' },
+  { name: 'margen_presentador', label: 'Margen', type: 'select', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', value: '', options: [{ value: '', label: '(Sin margen)' }, { value: 'D', label: 'Derecha' }, { value: 'I', label: 'Izquierda' }] },
+  { name: 'provincia_presentador', label: 'Provincia', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', mapFrom: 'provinciaEmplazamiento' },
+  { name: 'municipio_presentador', label: 'Municipio', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', mapFrom: 'localidadEmplazamiento' },
+  { name: 'poblacion_presentador', label: 'Población', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', mapFrom: 'localidadEmplazamiento' },
+  { name: 'cp_presentador', label: 'Código Postal', type: 'text', subsection: 'PRESENTACIÓN', group: 'Domicilio (Robot)', mapFrom: 'codigoPostalEmplazamiento' },
+  { name: 'telefono_presentador', label: 'Teléfono Fijo', type: 'tel', subsection: 'PRESENTACIÓN', group: 'Contacto (Robot)', mapFrom: 'telefono' },
+  { name: 'movil_presentador', label: 'Móvil', type: 'tel', subsection: 'PRESENTACIÓN', group: 'Contacto (Robot)', mapFrom: 'telefono' },
+  { name: 'email_presentador', label: 'Email', type: 'email', subsection: 'PRESENTACIÓN', group: 'Contacto (Robot)', mapFrom: 'correoElectronicoEmplazamiento' },
+
+  { name: 'con_representante_legal', label: '¿Tiene Representante Legal?', type: 'checkbox', subsection: 'PRESENTACIÓN', group: 'Representante Legal (Robot)' },
+  { name: 'rep_leg_tipo_documento', label: 'Tipo Documento (R.Leg.)', type: 'select', subsection: 'PRESENTACIÓN', group: 'Representante Legal (Robot)', value: 'NIF', options: ['NIF', 'NIE', 'CIF'] },
+  { name: 'rep_leg_nif', label: 'NIF/CIF (R.Leg.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Representante Legal (Robot)' },
+  { name: 'rep_leg_sexo', label: 'Sexo (R.Leg.)', type: 'select', subsection: 'PRESENTACIÓN', group: 'Representante Legal (Robot)', value: 'M', options: [{ value: 'M', label: 'Hombre/Masculino' }, { value: 'F', label: 'Mujer/Femenino' }] },
+  { name: 'rep_leg_nombre', label: 'Nombre (R.Leg.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Representante Legal (Robot)' },
+  { name: 'rep_leg_apellido1', label: 'Primer Apellido (R.Leg.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Representante Legal (Robot)' },
+  { name: 'rep_leg_apellido2', label: 'Segundo Apellido (R.Leg.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Representante Legal (Robot)' },
+
+  { name: 'con_persona_autorizada', label: '¿Tiene Persona Autorizada?', type: 'checkbox', subsection: 'PRESENTACIÓN', group: 'Persona Autorizada (Robot)', value: true },
+  { name: 'per_aut_tipo_documento', label: 'Tipo Documento (P.Aut.)', type: 'select', subsection: 'PRESENTACIÓN', group: 'Persona Autorizada (Robot)', value: 'NIF', options: ['NIF', 'NIE', 'CIF'] },
+  { name: 'per_aut_nif', label: 'NIF/CIF (P.Aut.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Persona Autorizada (Robot)', value: '28818007L' },
+  { name: 'per_aut_sexo', label: 'Sexo (P.Aut.)', type: 'select', subsection: 'PRESENTACIÓN', group: 'Persona Autorizada (Robot)', value: 'M', options: [{ value: 'M', label: 'Hombre/Masculino' }, { value: 'F', label: 'Mujer/Femenino' }] },
+  { name: 'per_aut_nombre', label: 'Nombre (P.Aut.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Persona Autorizada (Robot)', value: 'Eduardo' },
+  { name: 'per_aut_apellido1', label: 'Primer Apellido (P.Aut.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Persona Autorizada (Robot)', value: 'Rivera' },
+  { name: 'per_aut_apellido2', label: 'Segundo Apellido (P.Aut.)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Persona Autorizada (Robot)', value: 'Cabezas' },
+
+  { name: 'cnae_rite', label: 'Actividad CNAE / RITE', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', options: cnaeOptions },
+  { name: 'numero_empresa_instaladora', label: 'Nº de Empresa Instaladora (RIIA)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: '41045500' },
+  { name: 'codigo_ccaa', label: 'Comunidad Autónoma', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: '01', options: [{ value: '01', label: 'Andalucía' }, { value: '02', label: 'Aragón' }, { value: '03', label: 'Asturias' }, { value: '04', label: 'Balears' }, { value: '05', label: 'Canarias' }, { value: '06', label: 'Cantabria' }, { value: '07', label: 'Castilla y León' }, { value: '08', label: 'Castilla - La Mancha' }, { value: '09', label: 'Cataluña' }, { value: '10', label: 'Valencia' }, { value: '11', label: 'Extremadura' }, { value: '12', label: 'Galicia' }, { value: '13', label: 'Madrid' }, { value: '14', label: 'Murcia' }, { value: '15', label: 'Navarra' }, { value: '16', label: 'País Vasco' }, { value: '17', label: 'Rioja' }, { value: '18', label: 'Ceuta' }, { value: '19', label: 'Melilla' }] },
+
+  { name: 'cups_presentador', label: 'CUPS', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'cups' },
+  { name: 'cau_presentador', label: 'CAU', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'cau' },
+  { name: 'potencia_instalacion', label: 'Potencia (kW)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'e2_potenciaNominalInversores' },
+  { name: 'tipo_suministro', label: 'Tipo Suministro', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: 'Monofásico', options: ['Monofásico', 'Trifásico'], mapFrom: 'e2_tipoConexionRed1', mapTransform: { 'Monofásica': 'Monofásico', 'Trifásica': 'Trifásico' } },
+  { name: 'tension_red', label: 'Tensión de la Red (V)', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: '230', options: ['230', '400', '20000', '66000'] },
+  { name: 'es_autoconsumo', label: '¿Es Autoconsumo?', type: 'checkbox', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: true },
+  { name: 'potencia_instalada_ficha', label: 'Potencia Instalada (kW)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'e2_potenciaNominalInversores' },
+  { name: 'tiene_acumulacion', label: '¿Tiene Acumulación (Baterías)?', type: 'select', options: ['si', 'no'], value: 'no', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'almacenamiento', mapTransform: { 'con almacenamiento': 'si', 'sin almacenamiento': 'no' } },
+  { name: 'potencia_acumulacion', label: 'Potencia Acumulación (kW)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'e2_potenciaMaximaSalida' },
+  { name: 'energia_almacenada', label: 'Energía Máx. Almacenada (kWh)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'e2_energiaTotal' },
+  { name: 'uso_instalacion', label: 'Uso de la instalación', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: 'produccion energia electrica', options: [{ value: 'produccion energia electrica', label: 'Producción de Energía Eléctrica' }] },
+  {
+    name: 'ps_distribuidora',
+    label: 'Empresa Distribuidora (Oficial)',
+    type: 'select',
+    options: distribuidoraOptions,
+    subsection: 'PRESENTACIÓN',
+    group: 'Instalación (Robot)',
+    mapFrom: 'empresa_distribuidora'
+  },
+  { name: 'nombre_empresa_instaladora', label: 'Nombre Empresa Instaladora', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: 'Solay Ingenieros s.l.' },
+  { name: 'empresa_instaladora_doc_tipo', label: 'Tipo Doc. Empresa', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: 'CIF', options: ['CIF', 'NIF', 'NIE'] },
+  { name: 'empresa_instaladora_doc', label: 'Nº Doc. Empresa', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: 'B09848912' },
+
+  // --- ARCHIVOS ADJUNTOS (NUEVO) ---
+  { name: 'doc_autorizacion_rep', label: '1.- MTD', type: 'file', accept: '.pdf,image/*', subsection: 'PRESENTACIÓN', group: 'Documentos a Subir' },
+  { name: 'doc_adicional_2', label: '2.- Documento Adicional / CIE', type: 'file', accept: '.pdf,image/*', subsection: 'PRESENTACIÓN', group: 'Documentos a Subir' },
+  { name: 'doc_certificado_solidez', label: '7.- Certificado de Adecuacion', type: 'file', accept: '.pdf,image/*', subsection: 'PRESENTACIÓN', group: 'Documentos a Subir' }
+]
+
+export const getMasterFormDefaultData = () => {
+  const defaultData = {}
+  masterFormFields.forEach(field => {
+    // Si tiene un valor predefinido (value), lo usamos. 
+    // Si no, vacío (o false para checks)
+    if (field.value !== undefined) {
+      defaultData[field.name] = field.value
+    } else {
+      defaultData[field.name] = (field.type === 'checkbox' ? false : '')
+    }
+  })
+  return defaultData
+}
