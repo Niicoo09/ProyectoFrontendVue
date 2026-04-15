@@ -173,7 +173,7 @@ const fetchDocuments = async () => {
     documents.value = response.data;
   } catch (err) {
     console.error(err);
-    error.value = 'Asegúrate de que el backend esté corriendo en localhost:8080 y que CORS esté habilitado o el proxy funcionando.';
+    error.value = 'No se pudo conectar con el servidor. Verifica que el Backend esté en línea y los permisos de CORS estén configurados correctamente.';
   } finally {
     loading.value = false;
   }
