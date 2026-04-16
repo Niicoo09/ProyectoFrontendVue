@@ -15,6 +15,10 @@
       </nav>
 
       <div class="sidebar-footer">
+        <button @click="toggleTheme" class="btn-theme-toggle" title="Cambiar Tema">
+          <component :is="isDark ? SunIcon : MoonIcon" :size="18" />
+          <span>{{ isDark ? 'Modo Claro' : 'Modo Oscuro' }}</span>
+        </button>
         <div class="divider"></div>
         <p>© 2026 Solay Fotovoltaica</p>
       </div>
@@ -45,7 +49,28 @@
 </template>
 
 <script setup>
-import { LayoutDashboardIcon } from 'lucide-vue-next';
+import { LayoutDashboardIcon, SunIcon, MoonIcon } from 'lucide-vue-next';
+import { ref, onMounted } from 'vue';
+
+const isDark = ref(true);
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value;
+  const theme = isDark.value ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('solay-theme', theme);
+};
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem('solay-theme');
+  if (savedTheme === 'light') {
+    isDark.value = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    isDark.value = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+});
 </script>
 
 <style scoped>
@@ -122,15 +147,41 @@ import { LayoutDashboardIcon } from 'lucide-vue-next';
 
 .sidebar-footer {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   text-align: center;
   color: var(--text-muted);
   font-size: 0.75rem;
 }
 
+.btn-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  color: var(--text-main);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.btn-theme-toggle:hover {
+  background: var(--hover-subtle);
+  transform: translateY(-2px);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
 .divider {
   height: 1px;
   background: var(--surface-border);
-  margin-bottom: 1.5rem;
 }
 
 .main-content {
