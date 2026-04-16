@@ -4,7 +4,7 @@ const getBaseURL = () => {
   const envUrl = import.meta.env.VITE_API_BASE_URL;
 
   // 💻 OPCIÓN LOCAL: Descomenta la línea de abajo para probar con tu backend local
-  return 'http://localhost:3000/api/v1';
+  // return 'http://localhost:3000/api/v1';
 
   if (!envUrl) return '/api/v1'; // Fallback para desarrollo local (proxy)
 
