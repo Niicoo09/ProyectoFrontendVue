@@ -2,11 +2,15 @@ import axios from 'axios';
 
 const getBaseURL = () => {
   const envUrl = import.meta.env.VITE_API_BASE_URL;
+
+  // 💻 OPCIÓN LOCAL: Descomenta la línea de abajo para probar con tu backend local
+  // return 'http://localhost:3000/api/v1';
+
   if (!envUrl) return '/api/v1'; // Fallback para desarrollo local (proxy)
-  
+
   // Si la URL ya termina en /api/v1, la usamos tal cual
   if (envUrl.endsWith('/api/v1')) return envUrl;
-  
+
   // Si no, quitamos la barra final si existe y añadimos el prefijo
   return envUrl.replace(/\/+$/, '') + '/api/v1';
 };
