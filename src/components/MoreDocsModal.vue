@@ -101,11 +101,11 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'downloadMany', 'preview']);
 
-const activeTab = ref('certificados');
+const activeTab = ref('proyectos');
 const selectedIds = ref([]);
 
 const tabs = [
-  { id: 'certificados', name: 'Certificados', icon: FileTextIcon },
+  { id: 'proyectos', name: 'Proyectos', icon: FileTextIcon },
   { id: 'aceptaciones', name: 'Aceptaciones', icon: ClipboardCheckIcon },
   { id: 'justificaciones', name: 'Justificaciones', icon: FolderIcon },
   { id: 'justificaciones50', name: 'Justificación 50%', icon: FileStackIcon },
@@ -116,44 +116,49 @@ const tabs = [
 watch(() => props.isOpen, (val) => {
   if (!val) {
     selectedIds.value = [];
-    activeTab.value = 'certificados';
+    activeTab.value = 'proyectos';
   }
 });
 
 const techDocs = [
-  { id: 'adecuacion', name: 'Cert. Adecuación', desc: 'Real Decreto 1699/2011.', icon: FileTextIcon, category: 'pdf' },
-  { id: 'aporticada-teja', name: 'Aporticada Teja', desc: 'Solidez para cubiertas de teja.', icon: LayoutIcon, category: 'pdf' },
-  { id: 'chapas-grecadas', name: 'Chapa Grecada', desc: 'Instalación aporticada.', icon: LayersIcon, category: 'pdf' },
-  { id: 'chapas-grecadas-coplanaria', name: 'Chapa Coplanaria', desc: 'Fijación coplanar.', icon: LayersIcon, category: 'pdf' },
-  { id: 'coplanar-teja', name: 'Coplanar Teja', desc: 'Nivelado sobre teja.', icon: LayoutIcon, category: 'pdf' },
-  { id: 'cubierta-plana-aporticada', name: 'Cubierta Plana', desc: 'Soporte aporticado.', icon: MaximizeIcon, category: 'pdf' },
-  { id: 'paramento-vertical', name: 'P. Vertical', desc: 'Fachadas y muros.', icon: HomeIcon, category: 'pdf' },
-  { id: 'pergola-aporticada', name: 'Pérgola', desc: 'Certificado específico.', icon: HomeIcon, category: 'pdf' },
-  { id: 'memoria-tecnica', name: 'Memoria Técnica', desc: 'Diseño de la instalación.', icon: FileTextIcon, category: 'pdf' },
-  { id: 'punto-recarga-ve', name: 'Punto Recarga', desc: 'Cargadores vehículos.', icon: ZapIcon, category: 'pdf' },
-  { id: 'planos', name: 'Planos', desc: 'Situación y Cubierta.', icon: LayoutIcon, category: 'pdf' },
-  { id: 'estudio-seguridad', name: 'Seguridad y Salud', desc: 'Estudio Básico de SYS.', icon: ShieldCheckIcon, category: 'pdf' },
+  { id: 'autorizacion-representacion', name: 'Autorización de Representación', desc: 'Autorización firmada por el titular.', icon: UserIcon, category: 'pdf' },
+  { id: 'mtd-monofasica-con-bateria', name: 'MTD (Con batería)', desc: 'Memoria Técnica de Diseño con acumulación.', icon: ZapIcon, category: 'pdf' },
+  { id: 'mtd-aislada-con-bateria', name: 'MTD (Aislada)', desc: 'Instalación aislada de red.', icon: ZapIcon, category: 'pdf' },
+  { id: 'mtd-trifasica-con-bateria', name: 'MTD (Trifásica con batería)', desc: 'Diseño para sistemas trifásicos.', icon: ZapIcon, category: 'pdf' },
+  { id: 'mtd-sin-bateria', name: 'MTD (Sin batería)', desc: 'Autoconsumo instantáneo.', icon: ZapIcon, category: 'pdf' },
+  { id: 'mtd-punto-recarga', name: 'MTD (Punto de recarga)', desc: 'Instalación de VE.', icon: ZapIcon, category: 'pdf' },
+  { id: 'coplanar-teja', name: 'Certificado de solidez (coplanar teja)', desc: 'Estructura nivelada sobre teja.', icon: LayoutIcon, category: 'pdf' },
+  { id: 'cubierta-plana-aporticada', name: 'Certificado de solidez (Cubierta plana)', desc: 'Soporte aporticado en plano.', icon: MaximizeIcon, category: 'pdf' },
+  { id: 'aporticado-teja', name: 'Certificado de solidez (aporticado teja)', desc: 'Soporte inclinado sobre teja.', icon: LayoutIcon, category: 'pdf' },
+  { id: 'paramento-vertical', name: 'Certificado de solidez (paramento vertical)', desc: 'Instalación en fachada.', icon: HomeIcon, category: 'pdf' },
+  { id: 'chapas-grecadas', name: 'Certificado de solidez (chapa grecada aporticada)', desc: 'Fijación en chapa con inclinación.', icon: LayersIcon, category: 'pdf' },
+  { id: 'chapas-grecadas-coplanaria', name: 'Certificado de solidez (chapa grecada coplanaria)', desc: 'Fijación directa a chapa.', icon: LayersIcon, category: 'pdf' },
+  { id: 'pergola-aporticada', name: 'Certificado de solidez (Pérgola)', desc: 'Estructura tipo pérgola.', icon: HomeIcon, category: 'pdf' },
+  { id: 'no-generacion-rcds', name: 'DR No Generación de Residuos', desc: 'Declaración responsable de escombros.', icon: Trash2Icon, category: 'pdf' },
+  { id: 'habilitacion-profesional', name: 'DR de Habilitación Profesional', desc: 'Habilitación técnica del instalador.', icon: HardHatIcon, category: 'pdf' },
+  { id: 'planos', name: 'Planos de Situación, Emplazamiento y Cubierta', desc: 'Planos técnicos oficiales.', icon: LayoutIcon, category: 'pdf' },
+  { id: 'estudio-seguridad', name: 'Estudio Básico de Seguridad y Salud - 80 páginas', desc: 'Documento completo de prevención.', icon: ShieldCheckIcon, category: 'pdf' },
+  { id: 'documento-ultima-pagina', name: 'Última Página - Otras Informaciones Útiles', desc: 'Cierre del expediente.', icon: FileTextIcon, category: 'pdf' },
 ];
 
 const adminDocs = [
-  { id: 'aceptacion-subvencion', name: 'Acept. Subvención', desc: 'Aceptación de ayuda oficial.', icon: SignatureIcon, category: 'aceptacion' },
-  { id: 'declaracion-cesion-tratamiento', name: 'Cesión de Datos', desc: 'Anexo A de tratamiento.', icon: ClipboardCheckIcon, category: 'aceptacion' },
-  { id: 'declaracion-ausencia-conflicto', name: 'DACI', icon: ClipboardCheckIcon, desc: 'Ausencia Conflicto Intereses.', category: 'aceptacion' },
-  { id: 'declaracion-compromiso-derechos', name: 'Compromiso Derechos', desc: 'Derechos sociales y laborales.', icon: ShieldCheckIcon, category: 'aceptacion' },
-  { id: 'declaracion-compromiso-transversales', name: 'Principios Transversales', desc: 'Cumplimiento principios transversales.', icon: ClipboardCheckIcon, category: 'aceptacion' },
-  { id: 'habilitacion-profesional', name: 'Habilitación', desc: 'Declaración técnica.', icon: HardHatIcon, category: 'pdf' },
-  { id: 'no-generacion-rcds', name: 'No Residuos', desc: 'Gestión de escombros.', icon: Trash2Icon, category: 'pdf' },
+  { id: 'aceptacion-subvencion', name: 'Aceptación de la Subvención Concedida', desc: 'Aceptación formal de la ayuda.', icon: SignatureIcon, category: 'aceptacion' },
+  { id: 'declaracion-cesion-tratamiento', name: 'ANEXO A - Declaración de Cesión y Tratamiento de Datos', desc: 'Tratamiento de datos personales.', icon: ClipboardCheckIcon, category: 'aceptacion' },
+  { id: 'declaracion-compromiso-derechos', name: 'ANEXO B - Compromiso de concesión de derechos y accesos', desc: 'Derechos sociales y laborales.', icon: ShieldCheckIcon, category: 'aceptacion' },
+  { id: 'declaracion-compromiso-transversales', name: 'ANEXO C - Cumplimiento de principios transversales', desc: 'Principios transversales del PRTR.', icon: ClipboardCheckIcon, category: 'aceptacion' },
+  { id: 'declaracion-ausencia-conflicto', name: 'DACI', icon: ClipboardCheckIcon, desc: 'Declaración de Ausencia de Conflicto de Intereses.', category: 'aceptacion' },
+  { id: 'cartel-l3', name: 'Cartel Publicitario L3', desc: 'Publicidad oficial Línea 3.', icon: LayersIcon, category: 'justificacion' },
+  { id: 'cartel-l4', name: 'Cartel Publicitario L4', desc: 'Publicidad oficial Línea 4.', icon: LayersIcon, category: 'justificacion' },
 ];
 
 const justDocs = [
-  { id: 'justificacion-pago-subvencion-l3', name: 'Justif. Pago L3', desc: 'Documento justificativo línea 3.', icon: FileTextIcon, category: 'justificacion' },
-  { id: 'justificacion-pago-subvencion-l4', name: 'Justif. Pago L4', desc: 'Documento justificativo línea 4.', icon: FileTextIcon, category: 'justificacion' },
-  { id: 'memoria-economica', name: 'Memoria Económica', desc: 'Justificación inversión realizada.', icon: FileTextIcon, category: 'justificacion' },
-  { id: 'memoria-fv-aer', name: 'Memoria FV/AER', desc: 'Justificación técnica instalación.', icon: FileTextIcon, category: 'justificacion' },
-  { id: 'obra-massol', name: 'Declaración Inicio', desc: 'Certificado inicio obra Massol.', icon: LayoutIcon, category: 'justificacion' },
-  { id: 'declaracion-compromiso-corriente', name: 'Compromiso Corriente', desc: 'Estar al corriente de pagos.', icon: ClipboardCheckIcon, category: 'justificacion' },
-  { id: 'cartel-l3', name: 'Cartel L3', desc: 'Cartel publicitario línea 3.', icon: LayersIcon, category: 'justificacion' },
-  { id: 'cartel-l4', name: 'Cartel L4', desc: 'Cartel publicitario línea 4.', icon: LayersIcon, category: 'justificacion' },
+  { id: 'justificacion-pago-subvencion-l3', name: 'Formato para Pago previa justificacion (100%) L3', desc: 'Documento justificativo línea 3.', icon: FileTextIcon, category: 'justificacion' },
+  { id: 'justificacion-pago-subvencion-l4', name: 'Formato para Pago previa justificacion (100%) L4', desc: 'Documento justificativo línea 4.', icon: FileTextIcon, category: 'justificacion' },
+  { id: 'memoria-economica', name: 'Memoria Económica (sin anexos)', desc: 'Justificación inversión realizada.', icon: FileTextIcon, category: 'justificacion' },
+  { id: 'memoria-fv-aer', name: 'Memoria Justificativa', desc: 'Justificación técnica de la instalación.', icon: FileTextIcon, category: 'justificacion' },
+  { id: 'certificado-pedidos', name: 'Certificado de Pedidos', desc: 'Certificado de pedidos realizados.', icon: FileCheckIcon, category: 'justificacion' },
+  { id: 'obra-massol', name: 'Declaración inicio de obras-Massol', desc: 'Certificado inicio obra Massol.', icon: LayoutIcon, category: 'justificacion' },
+  { id: 'declaracion-compromiso-corriente', name: 'Declaración de Compromiso de Pago - Corriente', desc: 'Estar al corriente de pagos.', icon: ClipboardCheckIcon, category: 'justificacion' },
 ];
  
 const just50Docs = [
@@ -163,21 +168,16 @@ const just50Docs = [
 ];
 
 const legalDocs = [
-  { id: 'mtd-monofasica-con-bateria', name: 'MTD Monofásica', desc: 'Autoconsumo con batería.', icon: ZapIcon, category: 'legalizacion' },
-  { id: 'mtd-trifasica-con-bateria', name: 'MTD Trifásica', desc: 'Autoconsumo trifásico bat.', icon: ZapIcon, category: 'legalizacion' },
-  { id: 'mtd-sin-bateria', name: 'MTD Sin Batería', desc: 'Autoconsumo sin batería.', icon: ZapIcon, category: 'legalizacion' },
-  { id: 'mtd-aislada-con-bateria', name: 'MTD Aislada', desc: 'Instalación aislada con bat.', icon: ZapIcon, category: 'legalizacion' },
-  { id: 'mtd-punto-recarga', name: 'MTD Punto Recarga', desc: 'Cargadores vehículo eléctrico.', icon: ZapIcon, category: 'legalizacion' },
-  { id: 'cie', name: 'CIE (Boletín)', desc: 'Certificado Inst. Eléctrica.', icon: FileCheckIcon, category: 'legalizacion' },
-  { id: 'doacfv', name: 'DOACFV', desc: 'Certificado Dirección Obra.', icon: SignatureIcon, category: 'legalizacion' },
-  { id: 'certificado-adecuacion', name: 'Cert. Adecuación', desc: 'Estado de la instalación.', icon: ClipboardCheckIcon, category: 'legalizacion' },
-  { id: 'autorizacion-representacion', name: 'Repres. Legal', desc: 'Autorización representación.', icon: UserIcon, category: 'legalizacion' },
-  { id: 'anexo-iii', name: 'Anexo III', desc: 'Comunicaciones oficiales.', icon: FileTextIcon, category: 'legalizacion' },
-  { id: 'no-generacion-rcds', name: 'Residuos (RCDs)', desc: 'Declaración no generación.', icon: Trash2Icon, category: 'legalizacion' },
+  { id: 'certificado-adecuacion', name: 'Certificado de Adecuación al RD 1699-2011', desc: 'Certificado de estado de la instalación.', icon: ClipboardCheckIcon, category: 'legalizacion' },
+  { id: 'cie', name: 'CIE', desc: 'Certificado de Instalación Eléctrica (Boletín).', icon: FileCheckIcon, category: 'legalizacion' },
+  { id: 'anexo-iii', name: 'ANEXO III', desc: 'Comunicaciones oficiales de la instalación.', icon: FileTextIcon, category: 'legalizacion' },
+  { id: 'certificado-direccion-obra', name: 'Certificado de Dirección de Obra', desc: 'Certificado oficial de dirección técnica.', icon: SignatureIcon, category: 'legalizacion' },
+  { id: 'declaracion-responsable-do', name: 'Declaración Responsable DO', desc: 'Declaración de la dirección de obra.', icon: ShieldCheckIcon, category: 'legalizacion' },
+  { id: 'dr-tecnico-competente', name: 'DR Técnico Competente', desc: 'Declaración responsable técnica.', icon: HardHatIcon, category: 'legalizacion' },
 ];
 
 const currentDocs = computed(() => {
-  if (activeTab.value === 'certificados') return techDocs;
+  if (activeTab.value === 'proyectos') return techDocs;
   if (activeTab.value === 'aceptaciones') return adminDocs;
   if (activeTab.value === 'justificaciones') return justDocs;
   if (activeTab.value === 'justificaciones50') return just50Docs;
@@ -237,7 +237,7 @@ const downloadSelected = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--surface);
 }
 
 .title-area {
@@ -267,7 +267,7 @@ const downloadSelected = () => {
 .title-area h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-main);
 }
 
 .btn-close {
@@ -366,7 +366,7 @@ const downloadSelected = () => {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--hover-subtle);
   border: 1px solid var(--surface-border);
   border-radius: 1rem;
   transition: all 0.2s ease;
@@ -379,7 +379,7 @@ const downloadSelected = () => {
 }
 
 .doc-item.is-selected {
-  background: rgba(99, 102, 241, 0.08);
+  background: var(--primary-glow);
   border-color: var(--primary);
 }
 
@@ -417,7 +417,7 @@ const downloadSelected = () => {
 .doc-icon-box {
   width: 36px;
   height: 36px;
-  background: rgba(99, 102, 241, 0.1);
+  background: var(--primary-glow);
   color: var(--primary);
   border-radius: 0.75rem;
   display: flex;
@@ -465,14 +465,14 @@ const downloadSelected = () => {
 }
 
 .btn-mini-preview:hover {
-  color: white;
+  color: var(--text-main);
   background: var(--surface);
   border-color: var(--accent);
 }
 
 .modal-footer {
   padding: 1.5rem 2rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--surface);
   border-top: 1px solid var(--surface-border);
   display: flex;
   justify-content: space-between;

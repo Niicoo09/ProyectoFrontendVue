@@ -716,7 +716,7 @@ const handleLaunchAutomation = async () => {
   font-size: 0.85rem; 
 }
 
-.nav-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--text-main); }
+.nav-item:hover { background: var(--hover-subtle); color: var(--text-main); }
 .nav-item.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 4px 12px 0 var(--primary-glow); }
 
 .sidebar-footer { 
@@ -739,7 +739,7 @@ const handleLaunchAutomation = async () => {
 }
 
 .header-info h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
-.progress-container { height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: 3px; overflow: hidden; }
+.progress-container { height: 6px; background: var(--hover-subtle); border-radius: 3px; overflow: hidden; }
 .progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.5s ease; }
 
 .fields-grid-container { 
@@ -757,14 +757,14 @@ const handleLaunchAutomation = async () => {
   align-items: center; 
   justify-content: space-between; 
   padding: 0.75rem 1.25rem; 
-  background: rgba(255,255,255, 0.02); 
+  background: var(--hover-subtle); 
   border-radius: 0.75rem; 
   border: 1px solid var(--surface-border); 
   cursor: pointer; 
   transition: all 0.2s ease; 
 }
 
-.group-header:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.04); }
+.group-header:hover { border-color: var(--primary); background: var(--hover-strong); }
 .group-title { font-size: 0.9rem; font-weight: 600; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px; }
 
 .rotate-180 { transform: rotate(180deg); }
@@ -794,7 +794,7 @@ const handleLaunchAutomation = async () => {
 
 .form-input, .form-select { 
   padding: 0.6rem 0.8rem; 
-  background: rgba(255, 255, 255, 0.04); 
+  background: var(--hover-subtle); 
   border: 1px solid var(--surface-border); 
   border-radius: 0.6rem; 
   color: var(--text-main); 
@@ -803,7 +803,7 @@ const handleLaunchAutomation = async () => {
   transition: all 0.3s ease; 
 }
 
-.form-input:focus, .form-select:focus { outline: none; border-color: var(--primary); background: rgba(255, 255, 255, 0.07); box-shadow: 0 0 0 3px var(--primary-glow); }
+.form-input:focus, .form-select:focus { outline: none; border-color: var(--primary); background: var(--hover-strong); box-shadow: 0 0 0 3px var(--primary-glow); }
 .form-select option { background: var(--bg-dark); color: var(--text-main); }
 
 .invalid-input {

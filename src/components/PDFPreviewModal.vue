@@ -74,13 +74,13 @@ defineEmits(['close', 'download']);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--surface-border);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
 .modal-header {
   padding: 1rem 2rem;
-  background: rgba(15, 23, 42, 0.9);
+  background: var(--surface);
   border-bottom: 1px solid var(--surface-border);
   display: flex;
   justify-content: space-between;
@@ -148,7 +148,7 @@ defineEmits(['close', 'download']);
 }
 
 .btn-close-circle {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--hover-subtle);
   border: 1px solid var(--surface-border);
   color: var(--text-muted);
   width: 36px;
@@ -187,8 +187,8 @@ defineEmits(['close', 'download']);
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  color: white;
-  background: #0f172a;
+  color: var(--text-main);
+  background: var(--bg-dark);
 }
 
 .animate-scale {

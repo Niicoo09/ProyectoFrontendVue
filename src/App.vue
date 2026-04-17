@@ -135,12 +135,12 @@ onMounted(() => {
 
 .nav-item:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--hover-subtle);
   transform: translateX(4px);
 }
 
 .nav-item.active {
-  background: linear-gradient(90deg, rgba(99, 102, 241, 0.15) 0%, transparent 100%);
+  background: linear-gradient(90deg, var(--primary-glow) 0%, transparent 100%);
   color: var(--primary);
   box-shadow: inset 4px 0 0 -2px var(--primary);
 }

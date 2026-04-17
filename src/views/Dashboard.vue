@@ -180,9 +180,17 @@ const fetchDocuments = async () => {
 };
 
 const filteredDocuments = computed(() => {
-  if (!searchQuery.value) return documents.value;
+  // 1. Creamos una copia para no mutar el original y ordenamos
+  let list = [...documents.value].sort((a, b) => {
+    const dateA = new Date(a.updatedAt || a.createdAt || 0);
+    const dateB = new Date(b.updatedAt || b.createdAt || 0);
+    return dateB - dateA; // Descendente: más recientes primero
+  });
+
+  // 2. Filtramos por búsqueda si hay texto
+  if (!searchQuery.value) return list;
   const q = searchQuery.value.toLowerCase();
-  return documents.value.filter(d => 
+  return list.filter(d => 
     d.nombre?.toLowerCase().includes(q) || d.id.toLowerCase().includes(q)
   );
 });
@@ -283,7 +291,7 @@ onMounted(fetchDocuments);
 .search-box input {
   background: transparent;
   border: none;
-  color: white;
+  color: var(--text-main);
   font-size: 1rem;
   width: 100%;
   outline: none;
@@ -359,7 +367,7 @@ onMounted(fetchDocuments);
 
 .btn-edit-icon:hover {
   color: var(--primary);
-  background: rgba(99, 102, 241, 0.15);
+  background: var(--primary-glow);
 }
 
 .meta-item {
@@ -428,7 +436,7 @@ onMounted(fetchDocuments);
 
 .btn-special {
   grid-column: span 2;
-  background: linear-gradient(90deg, rgba(99, 102, 241, 0.1), transparent);
+  background: linear-gradient(90deg, var(--primary-glow), transparent);
   border-color: var(--primary);
   color: var(--primary);
   font-weight: 600;
