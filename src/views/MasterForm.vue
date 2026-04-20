@@ -220,6 +220,9 @@ import {
 import { masterFormFields, getMasterFormDefaultData } from '../config/masterFormFields';
 import EquipmentAutocomplete from '../components/EquipmentAutocomplete.vue';
 import { documentService } from '../api/documentService';
+import { useToast } from '../store/toastStore';
+
+const toast = useToast();
 
 // Section Definitions
 const sections = [
@@ -523,6 +526,7 @@ const handleFileUpload = async (event, fieldName) => {
     try {
       formData.value[fieldName] = await readerPromise;
     } catch (err) {
+      toast.error('Error al leer el archivo');
       console.error('Error al leer el archivo:', err);
     }
   }
@@ -563,13 +567,13 @@ const saveForm = async () => {
       console.warn('No se pudo crear el snapshot inicial (posiblemente por tamaño excesivo):', snapErr);
     }
     
-    alert(isEditing ? '¡Datos actualizados correctamente!' : '¡Nuevo cliente registrado con éxito!');
+    toast.success(isEditing ? '¡Datos actualizados correctamente!' : '¡Nuevo cliente registrado con éxito!');
     router.push('/');
   } catch (err) {
     console.error('Error detallado al guardar:', err);
     // Con el ErrorResponseDTO el backend siempre devuelve { message: '...' }
     const errorMsg = err.response?.data?.message || err.message || 'Error desconocido';
-    alert(`No se pudieron guardar los datos. Detalles: ${errorMsg}`);
+    toast.error(`No se pudieron guardar los datos: ${errorMsg}`);
   } finally {
     isLoading.value = false;
   }

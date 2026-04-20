@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <ToastContainer />
     <!-- Sidebar -->
     <aside v-if="$route.path === '/'" class="sidebar glass-panel">
       <div class="logo">
@@ -51,6 +52,7 @@
 <script setup>
 import { LayoutDashboardIcon, SunIcon, MoonIcon } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
+import ToastContainer from './components/ToastContainer.vue';
 
 const isDark = ref(true);
 

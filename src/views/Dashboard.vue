@@ -149,6 +149,9 @@ import {
 import { documentService } from '../api/documentService';
 import MoreDocsModal from '../components/MoreDocsModal.vue';
 import PDFPreviewModal from '../components/PDFPreviewModal.vue';
+import { useToast } from '../store/toastStore';
+
+const toast = useToast();
 
 const documents = ref([]);
 const loading = ref(true);
@@ -199,8 +202,9 @@ const handleDownload = async (type, endpoint, doc) => {
   const fileName = `${endpoint}_${doc.nombre || 'Documento'}`.replace(/ /g, '_');
   try {
     await documentService.download(type, endpoint, doc.id, fileName);
+    toast.success(`Descarga iniciada: ${doc.nombre}`);
   } catch (err) {
-    alert('Error al descargar el archivo. Verifica la consola.');
+    toast.error('Error al descargar el archivo.');
   }
 };
 
@@ -244,8 +248,9 @@ const handlePreviewRequest = async (docInfo) => {
     const blob = await documentService.getBlob(docInfo.category, docInfo.id, selectedClient.value.id);
     if (previewUrl.value) URL.revokeObjectURL(previewUrl.value); // Limpiar memoria
     previewUrl.value = URL.createObjectURL(blob);
+    toast.info('Previsualización lista');
   } catch (err) {
-    alert('Error al generar la previsualización.');
+    toast.error('Error al generar la previsualización.');
     isPreviewOpen.value = false;
   }
 };
