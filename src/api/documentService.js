@@ -7,19 +7,25 @@ export const documentService = {
   getAll: () => api.get('/documents'),
 
   /**
-   * Obtiene los datos crudos (JSON) de un documento específico por su ID.
+   * Obtiene los datos completos de un cliente: metadatos + formulario.
+   * Respuesta: { id, nombre, data: {...}, createdAt, updatedAt }
    */
   getById: (id) => api.get(`/documents/data/${id}`),
 
   /**
-   * Crea un nuevo cliente con los datos iniciales del formulario.
+   * Crea un nuevo cliente. Envía el formato DocumentCreateDTO.
+   * @param {string} nombre - Nombre del cliente (apellidosNombre)
+   * @param {Object} formulario - Todos los campos del formulario
    */
-  create: (formData) => api.post('/documents', formData),
+  create: (nombre, formulario) => api.post('/documents', { nombre, formulario }),
 
   /**
-   * Actualiza los datos de un cliente existente.
+   * Actualiza los datos de un cliente existente. Envía el formato DocumentCreateDTO.
+   * @param {string} id - UUID del cliente
+   * @param {string} nombre - Nombre del cliente (apellidosNombre)
+   * @param {Object} formulario - Todos los campos del formulario
    */
-  update: (id, formData) => api.put(`/documents/${id}`, formData),
+  update: (id, nombre, formulario) => api.put(`/documents/${id}`, { nombre, formulario }),
 
   /**
    * Genera y descarga un PDF de cualquier categoría

@@ -239,6 +239,8 @@ const isLoading = ref(false);
 const isAutomating = ref(false);
 const expandedGroups = ref({});
 const dragOverField = ref(null);
+const isDirty = ref(false);
+const initialSnapshot = ref('');
 
 // Lógica de validación
 const validateNIF = (nif) => {
@@ -313,8 +315,11 @@ onMounted(async () => {
     isLoading.value = true;
     try {
       const response = await documentService.getById(route.params.id);
-      if (response.data) {
-        formData.value = buildInitialFormData(response.data);
+      // El backend ahora devuelve DocumentResponseDTO: { id, nombre, data, createdAt, updatedAt }
+      const formRaw = response.data?.data ?? response.data;
+      if (formRaw) {
+        formData.value = buildInitialFormData(formRaw);
+        initialSnapshot.value = JSON.stringify(formData.value);
       }
     } catch (err) {
       console.error('Error cargando documento:', err);
@@ -323,8 +328,14 @@ onMounted(async () => {
     }
   } else {
      formData.value = buildInitialFormData({});
+     initialSnapshot.value = JSON.stringify(formData.value);
   }
 });
+
+// Detectar cambios para el estado isDirty
+watch(formData, (newVal) => {
+  isDirty.value = JSON.stringify(newVal) !== initialSnapshot.value;
+}, { deep: true });
 
 // Computed Properties
 const currentFields = computed(() => {
@@ -501,9 +512,19 @@ const handleFileUpload = async (event, fieldName) => {
     const compressedDataUrl = await compressImage(file);
     formData.value[fieldName] = compressedDataUrl;
   } else {
-    const reader = new FileReader();
-    reader.onload = (e) => { formData.value[fieldName] = e.target.result; };
-    reader.readAsDataURL(file);
+    // Convertir FileReader a Promesa para esperar correctamente
+    const readerPromise = new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.onerror = (e) => reject(e);
+      reader.readAsDataURL(file);
+    });
+    
+    try {
+      formData.value[fieldName] = await readerPromise;
+    } catch (err) {
+      console.error('Error al leer el archivo:', err);
+    }
   }
 };
 
@@ -521,26 +542,34 @@ const saveForm = async () => {
   try {
     const isEditing = !!route.params.id;
     
-    // Filtrado de datos: no enviar campos vacíos para no saturar la BD
+    // Filtramos campos vacios para no saturar la BD
     const dataToSave = Object.fromEntries(
       Object.entries(formData.value).filter(([_, v]) => v !== '' && v !== null && v !== undefined || v === false)
     );
 
+    // El nombre lo extraemos del campo 'apellidosNombre' del formulario
+    const nombre = dataToSave.apellidosNombre || 'Cliente sin nombre';
+
     if (isEditing) {
-      await documentService.update(route.params.id, dataToSave);
+      await documentService.update(route.params.id, nombre, dataToSave);
     } else {
-      await documentService.create(dataToSave);
+      await documentService.create(nombre, dataToSave);
     }
     
-    // Reseteamos el estado sucio porque ya guardamos
     isDirty.value = false;
-    initialSnapshot.value = JSON.stringify(formData.value);
+    try {
+      initialSnapshot.value = JSON.stringify(formData.value);
+    } catch (snapErr) {
+      console.warn('No se pudo crear el snapshot inicial (posiblemente por tamaño excesivo):', snapErr);
+    }
     
     alert(isEditing ? '¡Datos actualizados correctamente!' : '¡Nuevo cliente registrado con éxito!');
     router.push('/');
   } catch (err) {
-    console.error('Error al guardar el formulario:', err);
-    alert('No se pudieron guardar los datos.');
+    console.error('Error detallado al guardar:', err);
+    // Con el ErrorResponseDTO el backend siempre devuelve { message: '...' }
+    const errorMsg = err.response?.data?.message || err.message || 'Error desconocido';
+    alert(`No se pudieron guardar los datos. Detalles: ${errorMsg}`);
   } finally {
     isLoading.value = false;
   }
