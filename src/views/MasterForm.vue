@@ -403,72 +403,96 @@ const triggerFields = ['edificioVivienda', 'edificioViviendaJUS', 'l3l4', 'tipoE
 let isInternalChange = false;
 let lastTriggerValues = { ...Object.fromEntries(triggerFields.map(f => [f, formData.value[f]])) };
 
-watch(formData, (newVal, oldVal) => {
+let oldFormDataStr = JSON.stringify(formData.value);
+
+watch(formData, (newVal) => {
   if (isInternalChange) return;
 
-  // Lógica General: mapFrom & mapTransform
-  masterFormFields.forEach(field => {
-    if (field.mapFrom) {
-      const sourceValue = newVal[field.mapFrom];
-      const targetValue = newVal[field.name];
-      const sourceOldValue = oldVal ? oldVal[field.mapFrom] : null;
+  // Optimización: Comparación profunda segura usando JSON
+  const newFormDataStr = JSON.stringify(newVal);
+  if (newFormDataStr === oldFormDataStr) return;
+  
+  const parsedOldVal = JSON.parse(oldFormDataStr);
+  let changed = false;
+  isInternalChange = true;
 
-      if (sourceOldValue !== undefined && sourceValue !== sourceOldValue) {
-        if (!targetValue || targetValue === sourceOldValue) {
-          
-          let parsedValue = sourceValue;
-          if (field.mapTransform && field.mapTransform[sourceValue]) {
-            parsedValue = field.mapTransform[sourceValue];
-          }
+  try {
+    // Lógica General: mapFrom & mapTransform
+    masterFormFields.forEach(field => {
+      if (field.mapFrom) {
+        const sourceValue = newVal[field.mapFrom];
+        const targetValue = newVal[field.name];
+        const sourceOldValue = parsedOldVal[field.mapFrom];
 
-          if (field.name === 'nombre_presentador' && sourceValue) {
-             let nombre = sourceValue;
-             let ap1 = '';
-             let ap2 = '';
-             if (sourceValue.includes(',')) {
-               const partes = sourceValue.split(',');
-               nombre = partes[1].trim();
-               const apellidos = partes[0].trim().split(' ');
-               ap1 = apellidos[0] || '';
-               ap2 = apellidos.slice(1).join(' ') || '';
-             } else {
-               const partes = sourceValue.trim().split(' ');
-               if (partes.length >= 3) {
-                 nombre = partes[0]; ap1 = partes[1]; ap2 = partes.slice(2).join(' ') || '';
-               } else if (partes.length === 2) {
-                 nombre = partes[0]; ap1 = partes[1];
+        if (sourceOldValue !== undefined && sourceValue !== sourceOldValue) {
+          if (!targetValue || targetValue === sourceOldValue) {
+            
+            let parsedValue = sourceValue;
+            if (field.mapTransform && field.mapTransform[sourceValue]) {
+              parsedValue = field.mapTransform[sourceValue];
+            }
+
+            if (field.name === 'nombre_presentador' && sourceValue) {
+               let nombre = sourceValue;
+               let ap1 = '';
+               let ap2 = '';
+               if (sourceValue.includes(',')) {
+                 const partes = sourceValue.split(',');
+                 nombre = partes[1].trim();
+                 const apellidos = partes[0].trim().split(' ');
+                 ap1 = apellidos[0] || '';
+                 ap2 = apellidos.slice(1).join(' ') || '';
+               } else {
+                 const partes = sourceValue.trim().split(' ');
+                 if (partes.length >= 3) {
+                   nombre = partes[0]; ap1 = partes[1]; ap2 = partes.slice(2).join(' ') || '';
+                 } else if (partes.length === 2) {
+                   nombre = partes[0]; ap1 = partes[1];
+                 }
                }
-             }
-             formData.value.nombre_presentador = nombre;
-             if (!formData.value.apellido1_presentador) formData.value.apellido1_presentador = ap1;
-             if (!formData.value.apellido2_presentador) formData.value.apellido2_presentador = ap2;
-             return;
+               formData.value.nombre_presentador = nombre;
+               if (!formData.value.apellido1_presentador) formData.value.apellido1_presentador = ap1;
+               if (!formData.value.apellido2_presentador) formData.value.apellido2_presentador = ap2;
+               changed = true;
+               return;
+            }
+            formData.value[field.name] = parsedValue;
+            changed = true;
           }
-          formData.value[field.name] = parsedValue;
+        }
+      }
+    });
+
+    // Lógica Edificio / Vivienda Synchronization
+    const changedField = triggerFields.find(field => newVal[field] !== lastTriggerValues[field]);
+    if (changedField) {
+      const value = newVal[changedField];
+      triggerFields.forEach(f => lastTriggerValues[f] = newVal[f]);
+      if (value) {
+        let detectedMode = null;
+        if (Object.values(syncConfig.edificio).includes(value)) detectedMode = 'edificio';
+        else if (Object.values(syncConfig.vivienda).includes(value)) detectedMode = 'vivienda';
+
+        if (detectedMode) {
+          const config = syncConfig[detectedMode];
+          Object.keys(config).forEach(field => {
+            formData.value[field] = config[field];
+            if (triggerFields.includes(field)) lastTriggerValues[field] = config[field];
+          });
+          changed = true;
         }
       }
     }
-  });
-
-  // Lógica Edificio / Vivienda Synchronization
-  const changedField = triggerFields.find(field => newVal[field] !== lastTriggerValues[field]);
-  if (changedField) {
-    const value = newVal[changedField];
-    triggerFields.forEach(f => lastTriggerValues[f] = newVal[f]);
-    if (!value) return;
-
-    let detectedMode = null;
-    if (Object.values(syncConfig.edificio).includes(value)) detectedMode = 'edificio';
-    else if (Object.values(syncConfig.vivienda).includes(value)) detectedMode = 'vivienda';
-
-    if (detectedMode) {
-      isInternalChange = true;
-      const config = syncConfig[detectedMode];
-      Object.keys(config).forEach(field => {
-        formData.value[field] = config[field];
-        if (triggerFields.includes(field)) lastTriggerValues[field] = config[field];
+  } finally {
+    // Si hubo cambios internos, esperamos al siguiente tick para restaurar
+    if (changed) {
+      nextTick(() => {
+        oldFormDataStr = JSON.stringify(formData.value);
+        isInternalChange = false;
       });
-      nextTick(() => isInternalChange = false);
+    } else {
+      oldFormDataStr = newFormDataStr;
+      isInternalChange = false;
     }
   }
 

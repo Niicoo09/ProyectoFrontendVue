@@ -29,8 +29,8 @@
             class="dropdown-item"
             @click="selectItem(item)"
           >
-            <div class="item-label">{{ item.label }}</div>
-            <div class="item-brand">{{ item.marca || item.marcaModelo }}</div>
+            <div class="item-label">{{ item.label || item.nombre }}</div>
+            <div class="item-brand">{{ item.marca || item.marcaModelo || item.nombre }}</div>
           </div>
         </template>
         
@@ -87,7 +87,8 @@ const filteredResults = computed(() => {
   
   const query = searchQuery.value.toLowerCase();
   return data.filter(item => 
-    item.label?.toLowerCase().includes(query) || 
+    (item.label && item.label.toLowerCase().includes(query)) || 
+    (item.nombre && item.nombre.toLowerCase().includes(query)) ||
     (item.marca && item.marca.toLowerCase().includes(query)) ||
     (item.marcaModelo && item.marcaModelo.toLowerCase().includes(query))
   );
@@ -99,9 +100,9 @@ const onInput = () => {
 };
 
 const selectItem = (item) => {
-  searchQuery.value = item.label;
+  searchQuery.value = item.label || item.nombre;
   showDropdown.value = false;
-  emit('update:modelValue', item.label);
+  emit('update:modelValue', item.label || item.nombre);
   emit('select', item);
 };
 

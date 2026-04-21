@@ -26,6 +26,33 @@ export const equipmentData = {
       intensidadIpmp: '13.20', 
       tensionVpmp: '41.70',
       tecnologia: 'Monocristalino'
+    },
+    { 
+      id: 4, 
+      label: 'Suntech STP390S', 
+      marca: 'Suntech', 
+      potenciaPicoModulo: '390', 
+      intensidadIpmp: '9.5', 
+      tensionVpmp: '380',
+      tecnologia: 'Monocristalino'
+    },
+    {
+      id: 5,
+      label: 'Trina Solar Vertex 550W',
+      marca: 'Trina Solar',
+      potenciaPicoModulo: '550',
+      intensidadIpmp: '17.4',
+      tensionVpmp: '31.6',
+      tecnologia: 'Monocristalino PERC'
+    },
+    {
+      id: 6,
+      label: 'JinkoSolar Tiger Pro 540W',
+      marca: 'JinkoSolar',
+      potenciaPicoModulo: '540',
+      intensidadIpmp: '13.11',
+      tensionVpmp: '41.2',
+      tecnologia: 'Monocristalino'
     }
   ],
   inversores: [
@@ -86,6 +113,45 @@ export const equipmentData = {
       energiaTotal: '5.0', 
       potenciaMaxima: '2.5', 
       maximoPicoPotencia: '3.5'
+    },
+    {
+      id: 3,
+      label: 'LG Chem Resu 10H',
+      marcaModelo: 'LG Chem',
+      tipoBateria: 'Iones de Litio',
+      tensionNominal: '400',
+      profundidadDescarga: '95%',
+      tensionMaxima: '450',
+      tensionMinima: '350',
+      energiaTotal: '9.8',
+      potenciaMaxima: '5.0',
+      maximoPicoPotencia: '7.0'
+    },
+    {
+      id: 4,
+      label: 'Pylontech US2000C',
+      marcaModelo: 'Pylontech',
+      tipoBateria: 'LiFePO4',
+      tensionNominal: '48',
+      profundidadDescarga: '95%',
+      tensionMaxima: '53.5',
+      tensionMinima: '45',
+      energiaTotal: '2.4',
+      potenciaMaxima: '2.4',
+      maximoPicoPotencia: '4.8'
+    },
+    { 
+      id: 5, 
+      label: 'Tesla Powerwall 2',
+      marcaModelo: 'Tesla Powerwall 2', 
+      tipoBateria: 'Litio', 
+      tensionNominal: '220', 
+      profundidadDescarga: '95%', 
+      tensionMaxima: '265', 
+      tensionMinima: '180', 
+      energiaTotal: '13.5', 
+      potenciaMaxima: '7', 
+      maximoPicoPotencia: '10'
     }
   ]
 };

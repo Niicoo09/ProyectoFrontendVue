@@ -2,16 +2,20 @@
   <div class="app-container">
     <ToastContainer />
     <!-- Sidebar -->
-    <aside v-if="$route.path === '/'" class="sidebar glass-panel">
+    <aside v-if="!$route.path.startsWith('/master-form')" class="sidebar glass-panel">
       <div class="logo">
         <h1 class="gradient-text">Solay</h1>
         <span class="sub-logo">Docs API</span>
       </div>
       
       <nav class="navigation">
-        <router-link to="/" class="nav-item" active-class="active">
+        <router-link to="/" class="nav-item" active-class="active" exact>
           <LayoutDashboardIcon :size="20" />
           <span>Dashboard</span>
+        </router-link>
+        <router-link to="/equipos" class="nav-item" active-class="active">
+          <DatabaseIcon :size="20" />
+          <span>Gestión de Equipos</span>
         </router-link>
       </nav>
 
@@ -27,10 +31,10 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <header class="top-header animate-fade-in" v-if="$route.path === '/'">
+      <header class="top-header animate-fade-in" v-if="['/', '/equipos'].includes($route.path)">
         <div class="header-left">
-          <h2>Panel de Control</h2>
-          <p class="text-muted">Gestiona y descarga la documentación técnica de tus clientes.</p>
+          <h2>{{ $route.path === '/equipos' ? 'Gestión de Equipos' : 'Panel de Control' }}</h2>
+          <p class="text-muted">{{ $route.path === '/equipos' ? 'Administra el catálogo de inversores, baterías y módulos disponibles para los proyectos.' : 'Gestiona y descarga la documentación técnica de tus clientes.' }}</p>
         </div>
         <div class="header-right">
           <div class="status-badge">
@@ -50,7 +54,7 @@
 </template>
 
 <script setup>
-import { LayoutDashboardIcon, SunIcon, MoonIcon } from 'lucide-vue-next';
+import { LayoutDashboardIcon, SunIcon, MoonIcon, DatabaseIcon } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import ToastContainer from './components/ToastContainer.vue';
 
