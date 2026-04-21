@@ -1,19 +1,24 @@
 import axios from 'axios';
 
+// LOG DE CONTROL PARA SABER SI EL ARCHIVO SE HA ACTUALIZADO
+console.warn('[DEBUG] Cargando Axios v3 - Limpio');
+
 const getBaseURL = () => {
   const envUrl = import.meta.env.VITE_API_BASE_URL;
+  console.log('[DEBUG] VITE_API_BASE_URL detectada:', envUrl);
 
-  // En desarrollo local si no hay variable de entorno
-  if (!envUrl && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    //return 'http://localhost:3000/api/v1';
+  if (envUrl) {
+    // Limpiar barras finales y asegurar /api/v1
+    const cleaned = envUrl.replace(/\/+$/, '');
+    return cleaned.endsWith('/api/v1') ? cleaned : `${cleaned}/api/v1`;
   }
 
-  // En producción
-  if (!envUrl) return '/api/v1';
+  // Fallback para LOCALHOST
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:3000/api/v1';
+  }
 
-  // Normalizar URL
-  const baseUrl = envUrl.replace(/\/+$/, '');
-  return baseUrl.endsWith('/api/v1') ? baseUrl : `${baseUrl}/api/v1`;
+  return '/api/v1';
 };
 
 const api = axios.create({
@@ -23,31 +28,15 @@ const api = axios.create({
   },
 });
 
-// INTERCEPTOR DE DEPURACIÓN
-api.interceptors.request.use(config => {
-  console.log(`[API Request] ${config.method.toUpperCase()} ${config.baseURL}${config.url}`);
-  return config;
-}, error => {
-  return Promise.reject(error);
-});
-
 api.interceptors.response.use(
-  response => response,
+  r => r,
   error => {
-    const errorInfo = {
-      message: error.message,
+    console.error('[DEBUG] Error en petición:', {
       url: error.config?.url,
       baseURL: error.config?.baseURL,
       status: error.response?.status,
-      data: error.response?.data
-    };
-    console.error('[API Error Detail]:', errorInfo);
-
-    // Solo mostramos alert en producción para ver el fallo real
-    if (window.location.hostname !== 'localhost') {
-      alert(`Error API: ${error.message}\nURL: ${error.config?.baseURL}${error.config?.url}\nStatus: ${error.response?.status || 'Red/CORS'}`);
-    }
-
+      message: error.message
+    });
     return Promise.reject(error);
   }
 );
