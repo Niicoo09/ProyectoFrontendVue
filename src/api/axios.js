@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // LOG DE CONTROL PARA SABER SI EL ARCHIVO SE HA ACTUALIZADO
-console.warn('[DEBUG] Cargando Axios v3 - Limpio');
+console.warn('[DEBUG-V4] VERSION FINAL - SIN CACHE');
+// Timestamp: 2026-04-21 11:58
 
 const getBaseURL = () => {
   const envUrl = import.meta.env.VITE_API_BASE_URL;
