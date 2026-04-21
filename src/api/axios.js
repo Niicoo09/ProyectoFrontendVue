@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const getBaseURL = () => {
   const envUrl = import.meta.env.VITE_API_BASE_URL;
-  
+
   // En desarrollo local si no hay variable de entorno
   if (!envUrl && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    return 'http://localhost:3000/api/v1';
+    //return 'http://localhost:3000/api/v1';
   }
 
   // En producción
@@ -42,12 +42,12 @@ api.interceptors.response.use(
       data: error.response?.data
     };
     console.error('[API Error Detail]:', errorInfo);
-    
+
     // Solo mostramos alert en producción para ver el fallo real
     if (window.location.hostname !== 'localhost') {
       alert(`Error API: ${error.message}\nURL: ${error.config?.baseURL}${error.config?.url}\nStatus: ${error.response?.status || 'Red/CORS'}`);
     }
-    
+
     return Promise.reject(error);
   }
 );
