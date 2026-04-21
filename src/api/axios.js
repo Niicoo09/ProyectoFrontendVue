@@ -9,14 +9,15 @@ const getBaseURL = () => {
   console.log('[DEBUG] VITE_API_BASE_URL detectada:', envUrl);
 
   if (envUrl) {
-    // Limpiar barras finales y asegurar /api/v1
+    // Limpiar barras finales y asegurar /api/v1/
     const cleaned = envUrl.replace(/\/+$/, '');
-    return cleaned.endsWith('/api/v1') ? cleaned : `${cleaned}/api/v1`;
+    const final = cleaned.endsWith('/api/v1') ? cleaned : `${cleaned}/api/v1`;
+    return final + '/'; // Forzamos barra final
   }
 
   // Fallback para LOCALHOST
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:3000/api/v1';
+    return 'http://localhost:3000/api/v1/';
   }
 
   return '/api/v1';
