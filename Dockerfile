@@ -17,6 +17,7 @@ FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Configuración básica de Nginx para SPAs (manejo de rutas de Vue Router)
+# Configuración optimizada de Nginx para evitar caché en el index.html
 RUN echo 'server { \
     listen 80; \
     server_name localhost; \
@@ -24,6 +25,16 @@ RUN echo 'server { \
         root /usr/share/nginx/html; \
         index index.html; \
         try_files $uri $uri/ /index.html; \
+        # EVITAR CACHÉ EN EL INDEX.HTML \
+        if ($request_uri ~* ^/index\.html$|^/$) { \
+            add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"; \
+        } \
+    } \
+    # CACHÉ LARGA PARA ASSETS (Vite usa hashes en los nombres) \
+    location /assets/ { \
+        root /usr/share/nginx/html; \
+        expires 1y; \
+        add_header Cache-Control "public, immutable"; \
     } \
 }' > /etc/nginx/conf.d/default.conf
 

@@ -73,39 +73,9 @@
         </div>
 
         <div class="card-actions">
-          <div class="action-group">
-            <span class="group-label">Documentos Oficiales</span>
-            <div class="buttons-grid">
-              <button @click="handleDownload('pdf', 'adecuacion', doc)" class="btn-dl">
-                <FileTextIcon :size="14" /> Adecuación
-              </button>
-              <button @click="handleDownload('pdf', 'memoria-tecnica', doc)" class="btn-dl">
-                <FileTextIcon :size="14" /> M. Técnica
-              </button>
-              <button @click="handleDownload('pdf', 'planos', doc)" class="btn-dl">
-                <FileTextIcon :size="14" /> Planos
-              </button>
-              <button @click="handleDownload('pdf', 'estudio-seguridad', doc)" class="btn-dl btn-special">
-                <ShieldCheckIcon :size="14" /> E. Seguridad
-              </button>
-            </div>
-          </div>
-
-          <div class="action-group">
-            <span class="group-label">Aceptaciones y Firmas</span>
-            <div class="buttons-grid">
-              <button @click="handleDownload('aceptacion', 'aceptacion-subvencion', doc)" class="btn-dl alt">
-                <SignatureIcon :size="14" /> Subvención
-              </button>
-              <button @click="handleDownload('aceptacion', 'declaracion-ausencia-conflicto', doc)" class="btn-dl alt">
-                <SignatureIcon :size="14" /> DACI
-              </button>
-            </div>
-          </div>
-          
-          <button @click="openDocsModal(doc)" class="btn-more">
-            Ver todos los certificados disponibles (14+)
-            <ChevronDownIcon :size="16" />
+          <button @click="openDocsModal(doc)" class="btn-catalog">
+            <FileStackIcon :size="18" />
+            Catálogo de Documentos
           </button>
         </div>
       </div>
@@ -144,7 +114,7 @@ import { ref, onMounted, computed } from 'vue';
 import { 
   SearchIcon, Loader2Icon, AlertCircleIcon, UserIcon, RefreshCwIcon, 
   CalendarIcon, FileTextIcon, ShieldCheckIcon, SignatureIcon, 
-  ChevronDownIcon, GhostIcon, PlusIcon, EditIcon
+  ChevronDownIcon, GhostIcon, PlusIcon, EditIcon, FileStackIcon
 } from 'lucide-vue-next';
 import { documentService } from '../api/documentService';
 import MoreDocsModal from '../components/MoreDocsModal.vue';
@@ -489,4 +459,42 @@ onMounted(fetchDocuments);
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+
+.btn-catalog {
+  width: 100%;
+  padding: 1rem;
+  background: #8b5cf6; /* Morado suave (Violet 500) */
+  border: 1px solid #7c3aed;
+  border-radius: 0.75rem;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.btn-catalog:hover {
+  background: #7c3aed; /* Un poco más intenso en hover (Violet 600) */
+  box-shadow: 0 8px 20px -4px rgba(139, 92, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-catalog svg {
+  transition: transform 0.2s ease;
+}
+
+.btn-catalog:hover svg {
+  transform: scale(1.1);
+}
+
 </style>

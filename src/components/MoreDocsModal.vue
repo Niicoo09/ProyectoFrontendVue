@@ -110,15 +110,8 @@ const tabs = [
   { id: 'justificaciones', name: 'Justificaciones', icon: FolderIcon },
   { id: 'justificaciones50', name: 'Justificación 50%', icon: FileStackIcon },
   { id: 'legalizacion', name: 'Legalización', icon: FileCheckIcon },
+  { id: 'pac', name: 'PAC', icon: ShieldCheckIcon },
 ];
-
-// Limpiar estados al cerrar/abrir
-watch(() => props.isOpen, (val) => {
-  if (!val) {
-    selectedIds.value = [];
-    activeTab.value = 'proyectos';
-  }
-});
 
 const techDocs = [
   { id: 'autorizacion-representacion', name: '1.- Autorización de Representación', desc: 'Autorización firmada por el titular.', icon: UserIcon, category: 'pdf' },
@@ -176,12 +169,18 @@ const legalDocs = [
   { id: 'dr-tecnico-competente', name: '1.1.a - DR Técnico Competente', desc: 'Declaración responsable técnica.', icon: HardHatIcon, category: 'legalizacion' },
 ];
 
+const pacDocs = [
+  { id: 'declaracion-propietario', name: '1.- Declaración del Propietario', desc: 'Conformidad para la central de generación.', icon: SignatureIcon, category: 'pac' },
+  { id: 'autorizacion-facturacion', name: '2.- Autorización de Facturación', desc: 'Gestión de facturación por representante.', icon: FileTextIcon, category: 'pac' },
+];
+
 const currentDocs = computed(() => {
   if (activeTab.value === 'proyectos') return techDocs;
   if (activeTab.value === 'aceptaciones') return adminDocs;
   if (activeTab.value === 'justificaciones') return justDocs;
   if (activeTab.value === 'justificaciones50') return just50Docs;
   if (activeTab.value === 'legalizacion') return legalDocs;
+  if (activeTab.value === 'pac') return pacDocs;
   return [];
 });
 
@@ -202,7 +201,14 @@ const preview = (doc) => {
 
 const downloadSelected = () => {
   // Buscamos la categoría real de cada ID para que la descarga sepa qué endpoint usar
-  const selectedDocs = [...techDocs, ...adminDocs, ...justDocs, ...just50Docs, ...legalDocs].filter(d => selectedIds.value.includes(d.id));
+  const selectedDocs = [
+    ...techDocs, 
+    ...adminDocs, 
+    ...justDocs, 
+    ...just50Docs, 
+    ...legalDocs,
+    ...pacDocs
+  ].filter(d => selectedIds.value.includes(d.id));
   emit('downloadMany', selectedDocs);
   selectedIds.value = [];
 };

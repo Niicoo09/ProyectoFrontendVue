@@ -40,6 +40,7 @@ export const documentService = {
     if (category === 'justificacion') basePath = '/justificaciones';
     if (category === 'justificaciones50') basePath = '/justificaciones50';
     if (category === 'legalizacion') basePath = '/legalizacion';
+    if (category === 'pac') basePath = '/pac';
 
     try {
       const response = await api.get(`${basePath}/${endpoint}/${id}`, {
@@ -62,6 +63,7 @@ export const documentService = {
     if (category === 'justificacion') basePath = '/justificaciones';
     if (category === 'justificaciones50') basePath = '/justificaciones50';
     if (category === 'legalizacion') basePath = '/legalizacion';
+    if (category === 'pac') basePath = '/pac';
     
     try {
       const response = await api.get(`${basePath}/${endpoint}/${id}`, {
