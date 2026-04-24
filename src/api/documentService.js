@@ -1,6 +1,8 @@
 import api from './axios';
 
 export const documentService = {
+  // LOG DE CONTROL PARA SABER SI EL ARCHIVO SE HA ACTUALIZADO (V-FILESYSTEM)
+  _version: console.log('[DEBUG-V5] documentService cargado con lógica de Content-Disposition'),
   /**
    * Obtiene la lista de todos los documentos/clientes
    */
@@ -46,7 +48,18 @@ export const documentService = {
       const response = await api.get(`${basePath}/${endpoint}/${id}`, {
         responseType: 'blob',
       });
-      triggerDownload(response.data, fileName);
+
+      // Intentamos extraer el nombre del archivo de la cabecera Content-Disposition
+      let finalFileName = fileName;
+      const contentDisposition = response.headers['content-disposition'];
+      if (contentDisposition) {
+        const fileNameMatch = contentDisposition.match(/filename="?(.+?)"?$/);
+        if (fileNameMatch && fileNameMatch[1]) {
+          finalFileName = fileNameMatch[1].replace(/\.pdf$/i, '');
+        }
+      }
+
+      triggerDownload(response.data, finalFileName);
     } catch (error) {
       console.error(`Error descargando documento (${category}/${endpoint}):`, error);
       throw error;
@@ -84,7 +97,9 @@ function triggerDownload(blobData, fileName) {
   const url = window.URL.createObjectURL(new Blob([blobData], { type: 'application/pdf' }));
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', `${fileName}.pdf`);
+  if (fileName) {
+    link.setAttribute('download', fileName.endsWith('.pdf') ? fileName : `${fileName}.pdf`);
+  }
   document.body.appendChild(link);
   link.click();
   link.remove();
