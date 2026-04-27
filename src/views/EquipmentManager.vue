@@ -89,7 +89,7 @@
           <div v-else class="cards-grid mt-4">
             <div v-for="item in equipmentList" :key="item.id || item.marcaModelo || item.marca" class="eq-card">
               <div class="card-header">
-                <h3>{{ item.marcaModelo || item.marca || 'Sin nombre' }}</h3>
+                <h3>{{ item.nombre || item.marcaModelo || item.marca || 'Sin nombre' }}</h3>
                 <span class="badge">{{ equipmentType }}</span>
               </div>
               
@@ -160,8 +160,8 @@ const CONFIG_MAP = {
   ],
   modulos: [
     { key: 'marca', label: 'Marca y Modelo', type: 'text', placeholder: 'Jinko Solar 450W' },
-    { key: 'potenciaPicoModulo', label: 'Potencia Pico (Wp)', type: 'number', placeholder: '450' },
-    { key: 'intensidadIpmp', label: 'Intensidad Máxima (Ipmp)', type: 'number', placeholder: '10.51' },
+    { key: 'potenciaPicoModulo', label: 'Potencia Pico (Wp)', type: 'text', placeholder: '450' },
+    { key: 'intensidadIpmp', label: 'Intensidad Máxima (Ipmp)', type: 'text', placeholder: '10.51' },
     { key: 'ramasEnParalelo', label: 'Nº Ramas en Paralelo', type: 'number', placeholder: '1' }
   ]
 };
