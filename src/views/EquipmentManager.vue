@@ -48,6 +48,7 @@
                   v-model="formData[field.key]"
                   class="form-input"
                   :placeholder="`Ej. ${field.placeholder || ''}`"
+                  :step="field.type === 'number' ? 'any' : null"
                   required
                 />
               </div>
@@ -141,22 +142,22 @@ const currentTypeString = computed(() => {
 const CONFIG_MAP = {
   inversores: [
     { key: 'marcaModelo', label: 'Marca y Modelo', type: 'text', placeholder: 'Huawei SUN2000' },
-    { key: 'potencia', label: 'Potencia', type: 'text', placeholder: '5' },
-    { key: 'vccMaxima', label: 'Vcc Máxima', type: 'text', placeholder: '1000' },
-    { key: 'vccMinima', label: 'Vcc Mínima', type: 'text', placeholder: '140' },
+    { key: 'potencia', label: 'Potencia', type: 'number', placeholder: '5' },
+    { key: 'vccMaxima', label: 'Vcc Máxima', type: 'number', placeholder: '1000' },
+    { key: 'vccMinima', label: 'Vcc Mínima', type: 'number', placeholder: '140' },
     { key: 'conexion', label: 'Conexión', type: 'select', options: ['Monofásica', 'Trifásica'] },
     { key: 'relacionTension', label: 'Relación Tensión', type: 'text', placeholder: '230V/400V' }
   ],
   baterias: [
     { key: 'marcaModelo', label: 'Marca Modelo', type: 'text', placeholder: 'Luna2000-5-S0' },
     { key: 'tipoBateria', label: 'Tipo Batería', type: 'text', placeholder: 'Litio' },
-    { key: 'tensionNominal', label: 'Tensión Nominal', type: 'text', placeholder: '360' },
+    { key: 'tensionNominal', label: 'Tensión Nominal', type: 'number', placeholder: '360' },
     { key: 'profundidadDescarga', label: 'Profundidad Descarga', type: 'text', placeholder: '100%' },
-    { key: 'tensionMaxima', label: 'Tensión Máxima', type: 'text', placeholder: '450' },
-    { key: 'tensionMinima', label: 'Tensión Mínima', type: 'text', placeholder: '300' },
-    { key: 'energiaTotal', label: 'Energía Total', type: 'text', placeholder: '5.0' },
-    { key: 'potenciaMaxima', label: 'Potencia Máxima', type: 'text', placeholder: '2.5' },
-    { key: 'maximoPicoPotencia', label: 'Máximo Pico Potencia', type: 'text', placeholder: '3.5' }
+    { key: 'tensionMaxima', label: 'Tensión Máxima', type: 'number', placeholder: '450' },
+    { key: 'tensionMinima', label: 'Tensión Mínima', type: 'number', placeholder: '300' },
+    { key: 'energiaTotal', label: 'Energía Total', type: 'number', placeholder: '5.0' },
+    { key: 'potenciaMaxima', label: 'Potencia Máxima', type: 'number', placeholder: '2.5' },
+    { key: 'maximoPicoPotencia', label: 'Máximo Pico Potencia', type: 'number', placeholder: '3.5' }
   ],
   modulos: [
     { key: 'marca', label: 'Marca y Modelo', type: 'text', placeholder: 'Jinko Solar 450W' },
