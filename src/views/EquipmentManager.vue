@@ -198,7 +198,15 @@ const resetForm = () => {
 };
 
 const editEquipment = (item) => {
-  formData.value = { ...item };
+  // Normalizar campos numéricos (convertir comas en puntos) para que el input type="number" los reconozca
+  const normalizedItem = { ...item };
+  currentConfig.value.forEach(field => {
+    if (field.type === 'number' && typeof normalizedItem[field.key] === 'string') {
+      normalizedItem[field.key] = normalizedItem[field.key].replace(',', '.');
+    }
+  });
+
+  formData.value = normalizedItem;
   isEditing.value = true;
   editingId.value = item.id;
   // Scroll hacia el formulario
