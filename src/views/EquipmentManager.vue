@@ -198,10 +198,19 @@ const resetForm = () => {
 };
 
 const editEquipment = (item) => {
-  formData.value = { ...item };
+  // Asegurar que al cargar, todo lo que parezca un número con punto se vea con coma
+  const cleanedItem = { ...item };
+  Object.keys(cleanedItem).forEach(key => {
+    if (typeof cleanedItem[key] === 'string' && /^\d+\.\d+$/.test(cleanedItem[key])) {
+      cleanedItem[key] = cleanedItem[key].replace('.', ',');
+    } else if (typeof cleanedItem[key] === 'number') {
+      cleanedItem[key] = cleanedItem[key].toString().replace('.', ',');
+    }
+  });
+
+  formData.value = cleanedItem;
   isEditing.value = true;
   editingId.value = item.id;
-  // Scroll hacia el formulario
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
@@ -220,11 +229,24 @@ const deleteEquipment = async (item) => {
 const saveEquipment = async () => {
   isSaving.value = true;
   try {
+    // Limpieza final: asegurar que si hay algún punto se guarde como coma
+    const dataToSave = { ...formData.value };
+    Object.keys(dataToSave).forEach(key => {
+      if (typeof dataToSave[key] === 'string') {
+        // Solo reemplazamos si parece un formato numérico (para no romper IDs o nombres)
+        if (/^\d+\.\d+$/.test(dataToSave[key]) || /^\d+$/.test(dataToSave[key])) {
+           // Si es un número puro o con punto, lo dejamos con coma si es necesario
+           // Pero el usuario quiere COMAS, así que:
+           dataToSave[key] = dataToSave[key].replace('.', ',');
+        }
+      }
+    });
+
     if (isEditing.value && editingId.value) {
-      await equipmentService.update(equipmentType.value, editingId.value, formData.value);
+      await equipmentService.update(equipmentType.value, editingId.value, dataToSave);
       toast.success('Equipo actualizado correctamente');
     } else {
-      await equipmentService.create(equipmentType.value, formData.value);
+      await equipmentService.create(equipmentType.value, dataToSave);
       toast.success('Equipo creado correctamente');
     }
     resetForm();
