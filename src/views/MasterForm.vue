@@ -89,6 +89,7 @@
                 :key="field.name"
                 class="field-group"
                 :class="{ 'full-width': field.fullWidth }"
+                v-show="field.type !== 'hidden'"
               >
                 <label v-if="field.type !== 'checkbox'" :for="field.name" class="field-label">
                   {{ field.label }}
@@ -106,6 +107,34 @@
                     :class="{ 'invalid-input': validationErrors[field.name] }"
                   />
                   <span v-if="validationErrors[field.name]" class="text-[#ef4444] text-[0.7rem] font-medium absolute -bottom-4">{{ validationErrors[field.name] }}</span>
+                  
+                  <!-- Desglose de Calculadora PEM -->
+                  <div v-if="field.name === 'pemCalculoPresupuestoTotal' && formData.pemCalculoPresupuestoTotal" class="pem-breakdown-card glass-panel mt-4 animate-fade-in">
+                    <h4 class="pem-breakdown-title">Aclaración del Presupuesto (PEM)</h4>
+                    <div class="pem-breakdown-table">
+                      <div class="pem-row main-pem">
+                        <span class="pem-label">P.E.M. Final (Valor de Entrada)</span>
+                        <span class="pem-value">{{ formData.pemCalculoPem }} €</span>
+                      </div>
+                      <div class="pem-divider"></div>
+                      <div class="pem-row">
+                        <span class="pem-label">Gastos Generales (13%)</span>
+                        <span class="pem-value">{{ formData.pemCalculoGastosGenerales }} €</span>
+                      </div>
+                      <div class="pem-row">
+                        <span class="pem-label">Beneficio Industrial (6%)</span>
+                        <span class="pem-value">{{ formData.pemCalculoBeneficioIndustrial }} €</span>
+                      </div>
+                      <div class="pem-row">
+                        <span class="pem-label">PEC (Base Imponible)</span>
+                        <span class="pem-value">{{ formData.pemCalculoPec }} €</span>
+                      </div>
+                      <div class="pem-row">
+                        <span class="pem-label">IVA (21%)</span>
+                        <span class="pem-value">{{ formData.pemCalculoIva }} €</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Textarea -->
@@ -339,6 +368,36 @@ onMounted(async () => {
 watch(formData, (newVal) => {
   isDirty.value = JSON.stringify(newVal) !== initialSnapshot.value;
 }, { deep: true });
+
+// Watcher para la calculadora PEM
+watch(() => formData.value.pemCalculoPresupuestoTotal, (newVal) => {
+  if (newVal) {
+    const total = parseFloat(newVal);
+    if (!isNaN(total)) {
+      const pec = total / 1.21;
+      const pem = pec / 1.19;
+      const gastosGenerales = pem * 0.13;
+      const beneficioIndustrial = pem * 0.06;
+      const iva = pec * 0.21;
+
+      formData.value.pemCalculoPec = pec.toFixed(2);
+      formData.value.pemCalculoPem = pem.toFixed(2);
+      formData.value.pemCalculoGastosGenerales = gastosGenerales.toFixed(2);
+      formData.value.pemCalculoBeneficioIndustrial = beneficioIndustrial.toFixed(2);
+      formData.value.pemCalculoIva = iva.toFixed(2);
+
+      // Sincronizar presupuestoTotal (PEM final)
+      formData.value.presupuestoTotal = pem.toFixed(2);
+    }
+  } else {
+    formData.value.pemCalculoPec = '';
+    formData.value.pemCalculoPem = '';
+    formData.value.pemCalculoGastosGenerales = '';
+    formData.value.pemCalculoBeneficioIndustrial = '';
+    formData.value.pemCalculoIva = '';
+    formData.value.presupuestoTotal = '';
+  }
+});
 
 // Computed Properties
 const currentFields = computed(() => {
@@ -942,4 +1001,64 @@ const handleLaunchAutomation = async () => {
 .flex { display: flex; }
 .items-center { align-items: center; }
 .gap-2 { gap: 0.4rem; }
+
+/* PEM Breakdown Styles */
+.pem-breakdown-card {
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pem-breakdown-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.pem-breakdown-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pem-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.pem-row.main-pem {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 700;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--primary-glow);
+}
+
+.pem-row.main-pem .pem-value {
+  color: var(--accent);
+}
+
+.pem-value {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.pem-divider {
+  height: 1px;
+  background: var(--surface-border);
+  margin: 0.25rem 0;
+}
 </style>

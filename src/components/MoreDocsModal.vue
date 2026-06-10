@@ -90,7 +90,7 @@ import {
   HardHatIcon, Trash2Icon, ZapIcon, HomeIcon, LayoutIcon, 
   LayersIcon, MaximizeIcon, ClipboardCheckIcon, FileTextIcon,
   ShieldCheckIcon, SignatureIcon, ClockIcon, FolderIcon,
-  FileCheckIcon, UserIcon
+  FileCheckIcon, UserIcon, CalculatorIcon
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -130,6 +130,7 @@ const techDocs = [
   { id: 'no-generacion-rcds', name: '8.- DR No Generación de Residuos', desc: 'Declaración responsable de escombros.', icon: Trash2Icon, category: 'pdf' },
   { id: 'habilitacion-profesional', name: '9.- DR de Habilitación Profesional', desc: 'Habilitación técnica del instalador.', icon: HardHatIcon, category: 'pdf' },
   { id: 'planos', name: '12.- Planos de Situación, Emplazamiento y Cubierta', desc: 'Planos técnicos oficiales.', icon: LayoutIcon, category: 'pdf' },
+  { id: 'calculo-pem', name: '13.- Cálculo PEM', desc: 'Aclaración y desglose oficial del presupuesto del proyecto.', icon: CalculatorIcon, category: 'proyectos' },
   { id: 'estudio-seguridad', name: 'Estudio Básico de Seguridad y Salud - 80 páginas', desc: 'Documento completo de prevención.', icon: ShieldCheckIcon, category: 'pdf' },
   { id: 'documento-ultima-pagina', name: 'Última Página - Otras Informaciones Útiles', desc: 'Cierre del expediente.', icon: FileTextIcon, category: 'pdf' },
 ];

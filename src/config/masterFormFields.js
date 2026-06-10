@@ -44,6 +44,12 @@ export const masterFormFields = [
  */ { name: 'e2_potenciaNominalInversores', label: 'POTENCIA NOMINAL TOTAL EN INVERSORES (kW)', placeholder: 'Ej: 5.5', type: 'text', subsection: 'E2' },
   { name: 'e2_tipoConexionRed', label: 'TIPO', placeholder: 'Ej: Monofásica / Trifásica', type: 'select', options: ['Monofásica', 'Trifásica'], subsection: 'E2' },
   { name: 'presupuestoTotal', label: 'Presupuesto Total', placeholder: 'Ej: 10000', type: 'text', subsection: 'E2' },
+  { name: 'pemCalculoPresupuestoTotal', label: 'Presupuesto Total IVA Incluido (€)', placeholder: 'Ej: 12100', type: 'number', subsection: 'E2', group: 'Calculadora PEM' },
+  { name: 'pemCalculoPem', label: 'PEM Calculado', type: 'hidden', subsection: 'E2', group: 'Calculadora PEM' },
+  { name: 'pemCalculoGastosGenerales', label: 'Gastos Generales (13%)', type: 'hidden', subsection: 'E2', group: 'Calculadora PEM' },
+  { name: 'pemCalculoBeneficioIndustrial', label: 'Beneficio Industrial (6%)', type: 'hidden', subsection: 'E2', group: 'Calculadora PEM' },
+  { name: 'pemCalculoPec', label: 'PEC', type: 'hidden', subsection: 'E2', group: 'Calculadora PEM' },
+  { name: 'pemCalculoIva', label: 'IVA (21%)', type: 'hidden', subsection: 'E2', group: 'Calculadora PEM' },
   // E2.2 Módulo Fotovoltaico
 /*   { name: 'e2_tecnologiaCelulaModulo', label: 'TECNOLOGÍA DE LA CÉLULA', placeholder: 'Ej: Monocristalino -PERC-', type: 'text', subsection: 'E2' },
  */  {
