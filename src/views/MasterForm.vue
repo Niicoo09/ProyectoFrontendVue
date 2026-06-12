@@ -198,9 +198,9 @@
                       <img v-if="formData[field.name]?.startsWith('data:image/')" :src="formData[field.name]" class="file-preview-image" />
                       <div v-else class="flex items-center gap-2">
                         <FileCheckIcon class="text-accent" :size="24" />
-                        <span class="file-name">Documento cargado</span>
+                        <span class="file-name">{{ formData[field.name + '_name'] || 'Documento cargado' }}</span>
                       </div>
-                      <button @click.prevent="formData[field.name] = ''" class="remove-file">Eliminar</button>
+                      <button @click.prevent="formData[field.name] = ''; formData[field.name + '_name'] = ''" class="remove-file">Eliminar</button>
                     </div>
                   </label>
                 </div>
@@ -593,6 +593,8 @@ const compressImage = (file) => {
 const handleFileUpload = async (event, fieldName) => {
   const file = event.target.files[0];
   if (!file) return;
+
+  formData.value[fieldName + '_name'] = file.name;
 
   if (file.type.startsWith('image/')) {
     const compressedDataUrl = await compressImage(file);
