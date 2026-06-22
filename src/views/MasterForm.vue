@@ -399,6 +399,28 @@ watch(() => formData.value.pemCalculoPresupuestoTotal, (newVal) => {
   }
 });
 
+// Watcher para calcular la potencia pico del generador y la potencia en líneas y circuitos
+watch(
+  [() => formData.value.e2_potenciaPicoModulo, () => formData.value.e2_totalModulos],
+  ([potMod, totMod]) => {
+    if (potMod !== undefined && totMod !== undefined && potMod !== '' && totMod !== '') {
+      const pMod = parseFloat(String(potMod).replace(',', '.'));
+      const tMod = parseFloat(String(totMod).replace(',', '.'));
+      
+      if (!isNaN(pMod) && !isNaN(tMod)) {
+        const genPico = Math.round(pMod * tMod);
+        formData.value.e2_potenciaPicoGenerador = String(genPico);
+        
+        const genKw = genPico / 1000;
+        formData.value.g_generadorDirectoInversorPotencia = String(genKw);
+      }
+    } else {
+      formData.value.e2_potenciaPicoGenerador = '';
+      formData.value.g_generadorDirectoInversorPotencia = '';
+    }
+  }
+);
+
 // Computed Properties
 const currentFields = computed(() => {
   return masterFormFields.filter(f => f.subsection === currentSection.value);
