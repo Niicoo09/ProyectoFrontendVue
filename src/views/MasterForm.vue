@@ -380,14 +380,14 @@ watch(() => formData.value.pemCalculoPresupuestoTotal, (newVal) => {
       const beneficioIndustrial = pem * 0.06;
       const iva = pec * 0.21;
 
-      formData.value.pemCalculoPec = pec.toFixed(2);
-      formData.value.pemCalculoPem = pem.toFixed(2);
-      formData.value.pemCalculoGastosGenerales = gastosGenerales.toFixed(2);
-      formData.value.pemCalculoBeneficioIndustrial = beneficioIndustrial.toFixed(2);
-      formData.value.pemCalculoIva = iva.toFixed(2);
+      formData.value.pemCalculoPec = pec.toFixed(2).replace('.', ',');
+      formData.value.pemCalculoPem = pem.toFixed(2).replace('.', ',');
+      formData.value.pemCalculoGastosGenerales = gastosGenerales.toFixed(2).replace('.', ',');
+      formData.value.pemCalculoBeneficioIndustrial = beneficioIndustrial.toFixed(2).replace('.', ',');
+      formData.value.pemCalculoIva = iva.toFixed(2).replace('.', ',');
 
       // Sincronizar presupuestoTotal (PEM final)
-      formData.value.presupuestoTotal = pem.toFixed(2);
+      formData.value.presupuestoTotal = pem.toFixed(2).replace('.', ',');
     }
   } else {
     formData.value.pemCalculoPec = '';
@@ -416,7 +416,7 @@ watch(
         formData.value.e2_tensionVpmpGenerador = formattedVPmp;
         
         const genKw = genPico / 1000;
-        const formattedKw = String(Math.round(genKw * 100) / 100).replace('.', ',');
+        const formattedKw = genKw.toFixed(2).replace('.', ',');
         formData.value.g_generadorDirectoInversorPotencia = formattedKw;
       }
     } else {
