@@ -399,7 +399,7 @@ watch(() => formData.value.pemCalculoPresupuestoTotal, (newVal) => {
   }
 });
 
-// Watcher para calcular la potencia pico del generador y la potencia en líneas y circuitos
+// Watcher para calcular la potencia pico del generador, la tensión Vpmp y la potencia en líneas y circuitos
 watch(
   [() => formData.value.e2_potenciaPicoModulo, () => formData.value.e2_totalModulos],
   ([potMod, totMod]) => {
@@ -411,11 +411,17 @@ watch(
         const genPico = Math.round(pMod * tMod);
         formData.value.e2_potenciaPicoGenerador = String(genPico);
         
+        const vPmp = 46.55 * tMod;
+        const formattedVPmp = String(Math.round(vPmp * 100) / 100).replace('.', ',');
+        formData.value.e2_tensionVpmpGenerador = formattedVPmp;
+        
         const genKw = genPico / 1000;
-        formData.value.g_generadorDirectoInversorPotencia = String(genKw);
+        const formattedKw = String(Math.round(genKw * 100) / 100).replace('.', ',');
+        formData.value.g_generadorDirectoInversorPotencia = formattedKw;
       }
     } else {
       formData.value.e2_potenciaPicoGenerador = '';
+      formData.value.e2_tensionVpmpGenerador = '';
       formData.value.g_generadorDirectoInversorPotencia = '';
     }
   }
