@@ -351,6 +351,16 @@ onMounted(async () => {
       const formRaw = response.data?.data ?? response.data;
       if (formRaw) {
         formData.value = buildInitialFormData(formRaw);
+
+        // Formatear g_generadorDirectoInversorPotencia a 2 decimales con coma al cargar
+        if (formData.value.g_generadorDirectoInversorPotencia) {
+          const cleanVal = String(formData.value.g_generadorDirectoInversorPotencia).replace(',', '.');
+          const num = parseFloat(cleanVal);
+          if (!isNaN(num)) {
+            formData.value.g_generadorDirectoInversorPotencia = num.toFixed(2).replace('.', ',');
+          }
+        }
+
         initialSnapshot.value = JSON.stringify(formData.value);
       }
     } catch (err) {
@@ -423,6 +433,16 @@ watch(
       formData.value.e2_potenciaPicoGenerador = '';
       formData.value.e2_tensionVpmpGenerador = '';
       formData.value.g_generadorDirectoInversorPotencia = '';
+    }
+  }
+);
+
+// Watcher para autocompletar la potencia de la batería en líneas y circuitos
+watch(
+  () => formData.value.e2_potenciaMaximaSalida,
+  (newVal) => {
+    if (newVal !== undefined && newVal !== null && newVal !== '') {
+      formData.value.g_bateriaDiRectaInversorPotencia = newVal;
     }
   }
 );
