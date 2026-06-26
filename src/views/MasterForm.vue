@@ -447,7 +447,7 @@ watch(
   }
 );
 
-// Watcher para autocompletar la potencia del inversor-red en líneas y circuitos
+// Watcher para autocompletar la potencia del inversor-red en lineas y circuitos (actualizado)
 watch(
   () => formData.value.e2_potenciaNominalInversores,
   (newVal) => {
