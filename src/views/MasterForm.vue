@@ -447,6 +447,16 @@ watch(
   }
 );
 
+// Watcher para autocompletar la potencia del inversor-red en líneas y circuitos
+watch(
+  () => formData.value.e2_potenciaNominalInversores,
+  (newVal) => {
+    if (newVal !== undefined && newVal !== null && newVal !== '') {
+      formData.value.g_inversorRedPotencia = newVal;
+    }
+  }
+);
+
 // Computed Properties
 const currentFields = computed(() => {
   return masterFormFields.filter(f => f.subsection === currentSection.value);
