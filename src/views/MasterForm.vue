@@ -244,7 +244,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { 
   ZapIcon, SaveIcon, ArrowLeftIcon, UserIcon, SettingsIcon, 
   LayersIcon, LayoutIcon, FileTextIcon, CheckCircleIcon, 
-  SendIcon, UploadIcon, FileCheckIcon, Loader2Icon, ChevronDownIcon, RocketIcon 
+  SendIcon, UploadIcon, FileCheckIcon, Loader2Icon, ChevronDownIcon, RocketIcon, MapPinIcon 
 } from 'lucide-vue-next';
 import { masterFormFields, getMasterFormDefaultData } from '../config/masterFormFields';
 import EquipmentAutocomplete from '../components/EquipmentAutocomplete.vue';
@@ -260,6 +260,7 @@ const sections = [
   { id: 'G', label: 'Líneas y Circuitos', icon: LayersIcon },
   { id: 'IMAGEN', label: 'Planos y Archivos', icon: LayoutIcon },
   { id: 'LEGALIZACION', label: 'Legalización', icon: FileTextIcon },
+  { id: 'EXTREMADURA', label: 'Extremadura', icon: MapPinIcon },
   { id: 'ACEPTACION', label: 'Aceptación', icon: CheckCircleIcon },
   { id: 'JUSTIFICACION', label: 'Justificación', icon: FileTextIcon },
   { id: 'PRESENTACIÓN', label: 'Presentación', icon: SendIcon },
@@ -347,7 +348,6 @@ onMounted(async () => {
     isLoading.value = true;
     try {
       const response = await documentService.getById(route.params.id);
-      // El backend ahora devuelve DocumentResponseDTO: { id, nombre, data, createdAt, updatedAt }
       const formRaw = response.data?.data ?? response.data;
       if (formRaw) {
         formData.value = buildInitialFormData(formRaw);
@@ -469,7 +469,6 @@ const groupedCurrentFields = computed(() => {
     const groupName = field.group || '__sin-grupo__';
     if (!grouped[groupName]) {
       grouped[groupName] = [];
-      // Iniciamos los grupos colapsables abiertos por defecto si no existen en el estado
       if (expandedGroups.value[groupName] === undefined && groupName !== '__sin-grupo__') {
         expandedGroups.value[groupName] = true;
       }
@@ -491,7 +490,6 @@ const progressPercentage = computed(() => {
   return Math.round((filled / total) * 100);
 });
 
-// Handlers -> Toggling Groups
 const toggleGroup = (groupName) => {
   expandedGroups.value[groupName] = !expandedGroups.value[groupName];
 };
@@ -525,7 +523,6 @@ let oldFormDataStr = JSON.stringify(formData.value);
 watch(formData, (newVal) => {
   if (isInternalChange) return;
 
-  // Optimización: Comparación profunda segura usando JSON
   const newFormDataStr = JSON.stringify(newVal);
   if (newFormDataStr === oldFormDataStr) return;
   
@@ -534,7 +531,6 @@ watch(formData, (newVal) => {
   isInternalChange = true;
 
   try {
-    // Lógica General: mapFrom & mapTransform
     masterFormFields.forEach(field => {
       if (field.mapFrom) {
         const sourceValue = newVal[field.mapFrom];
@@ -580,7 +576,6 @@ watch(formData, (newVal) => {
       }
     });
 
-    // Lógica Edificio / Vivienda Synchronization
     const changedField = triggerFields.find(field => newVal[field] !== lastTriggerValues[field]);
     if (changedField) {
       const value = newVal[changedField];
@@ -601,7 +596,6 @@ watch(formData, (newVal) => {
       }
     }
   } finally {
-    // Si hubo cambios internos, esperamos al siguiente tick para restaurar
     if (changed) {
       nextTick(() => {
         oldFormDataStr = JSON.stringify(formData.value);
@@ -615,7 +609,6 @@ watch(formData, (newVal) => {
 
 }, { deep: true });
 
-// Canvas Compression
 const compressImage = (file) => {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -658,7 +651,6 @@ const handleFileUpload = async (event, fieldName) => {
     const compressedDataUrl = await compressImage(file);
     formData.value[fieldName] = compressedDataUrl;
   } else {
-    // Convertir FileReader a Promesa para esperar correctamente
     const readerPromise = new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => resolve(e.target.result);
@@ -688,13 +680,10 @@ const saveForm = async () => {
   isLoading.value = true;
   try {
     const isEditing = !!route.params.id;
-    
-    // Filtramos campos vacios para no saturar la BD
     const dataToSave = Object.fromEntries(
       Object.entries(formData.value).filter(([_, v]) => v !== '' && v !== null && v !== undefined || v === false)
     );
 
-    // El nombre lo extraemos del campo 'apellidosNombre' del formulario
     const nombre = dataToSave.apellidosNombre || 'Cliente sin nombre';
 
     if (isEditing) {
@@ -714,7 +703,6 @@ const saveForm = async () => {
     router.push('/');
   } catch (err) {
     console.error('Error detallado al guardar:', err);
-    // Con el ErrorResponseDTO el backend siempre devuelve { message: '...' }
     const errorMsg = err.response?.data?.message || err.message || 'Error desconocido';
     toast.error(`No se pudieron guardar los datos: ${errorMsg}`);
   } finally {
@@ -729,7 +717,6 @@ const handleLaunchAutomation = async () => {
 
   isAutomating.value = true;
   
-  // Ensure changes are saved before launching
   await documentService.update(route.params.id || formData.value.id || 1, formData.value).catch(() => {});
 
   const form = formData.value;

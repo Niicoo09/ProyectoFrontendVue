@@ -68,6 +68,18 @@ export const documentService = {
   },
 
   /**
+   * Descarga el Certificado de Instalación Eléctrica (CIE) de Extremadura
+   */
+  downloadCieValidoExtremadura: (id) => 
+    documentService.download('legalizacion', 'cie-valido-extremadura', id, 'CIE Valido Extremadura'),
+
+  /**
+   * Descarga la Memoria Técnica de Diseño (MTD) de Extremadura
+   */
+  downloadMtdBajaTension: (id) => 
+    documentService.download('legalizacion', 'mtd-baja-tension', id, 'MTD Baja Tension'),
+
+  /**
    * Obtiene el Blob de un documento para previsualización
    * @param {'pdf' | 'aceptacion' | 'justificacion' | 'legalizacion'} category - Categoría del documento
    */

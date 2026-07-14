@@ -299,6 +299,73 @@ export const masterFormFields = [
   { name: 'dniRepresentanteEntidad', label: 'DNI del Representante de la Entidad', placeholder: 'Ej: 12345678A', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
   { name: 'denominacionEstablecimiento', label: 'Denominación del Establecimiento', placeholder: 'Ej: Bar Los Amigos', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
   { name: 'nifEstablecimiento', label: 'NIF del Establecimiento', placeholder: 'Ej: B12345678', type: 'text', subsection: 'LEGALIZACION', group: 'anexo III' },
+
+  // ========== SECCIÓN EXTREMADURA (NUEVO) ==========
+  // 1. Datos Administrativos y Ubicación
+  { name: 'esBadajoz', label: 'Provincia: Badajoz (X)', type: 'checkbox', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
+  { name: 'esCaceres', label: 'Provincia: Cáceres (X)', type: 'checkbox', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
+  { name: 'coordenadaX', label: 'Coordenada UTM X (ETRS89)', placeholder: 'Ej: 219438', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
+  { name: 'coordenadaY', label: 'Coordenada UTM Y (ETRS89)', placeholder: 'Ej: 4293810', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
+  { name: 'coordenadaHuso', label: 'Huso UTM', type: 'select', options: ['29', '30'], value: '30', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
+  
+  // 2. Parámetros Técnicos y Eléctricos (CIE / MTD)
+  { name: 'potenciaContratada', label: 'Potencia Contratada Actual (kW)', placeholder: 'Ej: 5.75', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },
+  { name: 'tensionSuministro', label: 'Tensión de Suministro (V)', placeholder: 'Ej: 230', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas', mapFrom: 'e2_relacionTensionInversor', mapTransform: { '230V/400V': '400', '230': '230', '400': '400' } },
+  { name: 'potenciaInstaladaPrevista', label: 'Potencia Instalada Prevista (kW)', placeholder: 'Ej: 5.0', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas', mapFrom: 'e2_potenciaNominalInversores' },
+  { name: 'potenciaMaximaContratar', label: 'Potencia Máxima a Contratar (kW)', placeholder: 'Ej: 5.75', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },
+  { name: 'potenciaMaximaAdmisible', label: 'Potencia Máxima Admisible (kW)', placeholder: 'Ej: 10.35', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },
+  
+  // 3. Distribución y Conexión
+  { name: 'esInstalacionAislada', label: 'Instalación Aislada (X)', type: 'checkbox', subsection: 'EXTREMADURA', group: 'Modalidad de Autoconsumo' },
+  { name: 'esInstalacionInterconectada', label: 'Instalación Interconectada (X)', type: 'checkbox', subsection: 'EXTREMADURA', group: 'Modalidad de Autoconsumo' },
+  { name: 'modalidadAutoconsumo', label: 'Modalidad de Autoconsumo', type: 'select', options: ['Tipo 1', 'Tipo 2', 'sin-excedentes', 'con-excedentes'], value: 'Tipo 2', subsection: 'EXTREMADURA', group: 'Modalidad de Autoconsumo' },
+  
+  // 4. Módulos y Generación
+  { name: 'totalModulos', label: 'Número de Módulos (Paneles)', placeholder: 'Ej: 10', type: 'text', subsection: 'EXTREMADURA', group: 'Módulos y Generador', mapFrom: 'e2_totalModulos' },
+  { name: 'potenciaPicoGenerador', label: 'Potencia Pico Generador (kWp)', placeholder: 'Ej: 4.5', type: 'text', subsection: 'EXTREMADURA', group: 'Módulos y Generador', mapFrom: 'e2_potenciaPicoGenerador' },
+  { name: 'marcaModeloModulo', label: 'Marca y Modelo Módulo', placeholder: 'Ej: JA Solar', type: 'text', subsection: 'EXTREMADURA', group: 'Módulos y Generador', mapFrom: 'e2_marcaModeloModulo' },
+  { name: 'potenciaPicoModulo', label: 'Potencia Pico Módulo (Wp)', placeholder: 'Ej: 450', type: 'text', subsection: 'EXTREMADURA', group: 'Módulos y Generador', mapFrom: 'e2_potenciaPicoModulo' },
+  { name: 'tecnologiaCelulaModulo', label: 'Tecnología de la Célula Módulo', type: 'select', options: ['Monocristalino', 'Policristalino'], value: 'Monocristalino', subsection: 'EXTREMADURA', group: 'Módulos y Generador' },
+  
+  // 5. Inversores y Salida
+  { name: 'totalInversores', label: 'Número Total Inversores', placeholder: 'Ej: 1', type: 'text', subsection: 'EXTREMADURA', group: 'Inversores', value: '1' },
+  { name: 'marcaModeloInversor', label: 'Marca y Modelo Inversor', placeholder: 'Ej: Fronius', type: 'text', subsection: 'EXTREMADURA', group: 'Inversores', mapFrom: 'e2_marcaModeloInversor' },
+  { name: 'potenciaACInversor', label: 'Potencia AC Inversor (kW)', placeholder: 'Ej: 5.0', type: 'text', subsection: 'EXTREMADURA', group: 'Inversores', mapFrom: 'e2_potenciaNominalInversor' },
+  { name: 'tensionNominalInversor', label: 'Tensión Nominal Inversor (V)', placeholder: 'Ej: 230', type: 'text', subsection: 'EXTREMADURA', group: 'Inversores', value: '230' },
+  { name: 'corrienteSalidaInversor', label: 'Corriente Salida Inversor (A)', placeholder: 'Ej: 21.7', type: 'text', subsection: 'EXTREMADURA', group: 'Inversores' },
+  { name: 'tipoConexionInversor', label: 'Tipo Conexión Inversor', type: 'select', options: ['Monofasico', 'Trifasico'], value: 'Monofasico', subsection: 'EXTREMADURA', group: 'Inversores', mapFrom: 'e2_tipoConexionRed1', mapTransform: { 'Monofásica': 'Monofasico', 'Trifásica': 'Trifasico' } },
+  
+  // 6. Baterías y Almacenamiento
+  { name: 'numeroBaterias', label: 'Número de Baterías', placeholder: 'Ej: 1', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías', mapFrom: 'numeroBaterias' },
+  { name: 'capacidadNominalBateria', label: 'Capacidad Nominal Batería (Ah)', placeholder: 'Ej: 100', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías' },
+  { name: 'tipoBateria', label: 'Tipo Batería (Química)', placeholder: 'Ej: Litio', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías', mapFrom: 'e2_tipoDeBateria' },
+  { name: 'marcaModeloBateria', label: 'Marca y Modelo Batería', placeholder: 'Ej: BYD', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías', mapFrom: 'e2_marcaModelo' },
+  { name: 'tensionNominalBateria', label: 'Tensión Nominal Batería (V)', placeholder: 'Ej: 48', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías', mapFrom: 'e2_tensionNominal' },
+  { name: 'tensionSalidaTotalBateria', label: 'Tensión Salida Total Batería (V)', placeholder: 'Ej: 48', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías' },
+  
+  // 7. Derivación Individual y Protecciones
+  { name: 'cajasGeneralesProteccion', label: 'Cajas Generales de Protección (CGP)', placeholder: 'Ej: CGP-1', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'sistemaInstalacionDI', label: 'Sistema de Instalación DI', placeholder: 'Ej: Bajo tubo', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'conductorDI', label: 'Conductor DI', placeholder: 'Ej: Cobre', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'seccionFase', label: 'Sección Fase DI (mm²)', placeholder: 'Ej: 10', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP', mapFrom: 'seccionFase' },
+  { name: 'aislamientoDI', label: 'Aislamiento DI', placeholder: 'Ej: XLPE', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'intensidadBasesCGP', label: 'Intensidad Bases CGP (A)', placeholder: 'Ej: 63', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'intensidadFusiblesCGP', label: 'Intensidad Fusibles CGP (A)', placeholder: 'Ej: 50', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'poderCorteFusibles', label: 'Poder Corte Fusibles (kA)', placeholder: 'Ej: 100', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'intensidadNominal', label: 'Intensidad Nominal IG (A)', placeholder: 'Ej: 25', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP', mapFrom: 'intensidadNominal' },
+  { name: 'poderCorteIG', label: 'Poder Corte IG (kA)', placeholder: 'Ej: 6', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'sensibilidadDiferencial', label: 'Sensibilidad Diferencial (mA)', type: 'select', options: ['30', '300'], value: '30', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  { name: 'conductoresTierra', label: 'Conductores de Tierra', placeholder: 'Ej: Cu 16mm²', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual y CGP' },
+  
+  // 8. Instalador y Director de Obra
+  { name: 'instaladorNombre', label: 'Nombre Instalador Autorizado', placeholder: 'Ej: EDUARDO RIVERA CABEZAS', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director', value: 'EDUARDO RIVERA CABEZAS' },
+  { name: 'nifInstalador', label: 'NIF del Instalador', placeholder: 'Ej: 28.818.007-L', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director', value: '28.818.007-L' },
+  { name: 'directorObra', label: 'Director de Obra', placeholder: 'Ej: Juan García', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director' },
+  { name: 'titulacion', label: 'Titulación Director de Obra', placeholder: 'Ej: Ingeniero Industrial', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director' },
+  { name: 'nifDirector', label: 'NIF Director de Obra', placeholder: 'Ej: 12345678A', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director' },
+  { name: 'organismoControl', label: 'Organismo de Control (OCA)', placeholder: 'Ej: SGS', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director' },
+  { name: 'referenciaCertificado', label: 'Referencia del Certificado', placeholder: 'Ej: REF-12345', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director' },
+  { name: 'fechaCertificado', label: 'Fecha de Certificado', type: 'date', subsection: 'EXTREMADURA', group: 'Instalador y Director' },
   // ========== SECCIÓN ACEPTACION: ACEPTACIÓN Y CONFORMIDAD ==========
   { name: 'codigoEni', label: 'Código ENI', placeholder: 'Ej: ENI12345', type: 'text', subsection: 'ACEPTACION' },
   { name: 'expedienteEco', label: 'Expediente ECO', placeholder: 'Ej: ECO12345', type: 'text', subsection: 'ACEPTACION' },

@@ -90,7 +90,7 @@ import {
   HardHatIcon, Trash2Icon, ZapIcon, HomeIcon, LayoutIcon, 
   LayersIcon, MaximizeIcon, ClipboardCheckIcon, FileTextIcon,
   ShieldCheckIcon, SignatureIcon, ClockIcon, FolderIcon,
-  FileCheckIcon, UserIcon, CalculatorIcon
+  FileCheckIcon, UserIcon, CalculatorIcon, MapPinIcon
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -110,6 +110,7 @@ const tabs = [
   { id: 'justificaciones', name: 'Justificaciones', icon: FolderIcon },
   { id: 'justificaciones50', name: 'Justificación 50%', icon: FileStackIcon },
   { id: 'legalizacion', name: 'Legalización', icon: FileCheckIcon },
+  { id: 'extremadura', name: 'Extremadura', icon: MapPinIcon },
   { id: 'pac', name: 'PAC', icon: ShieldCheckIcon },
 ];
 
@@ -170,6 +171,11 @@ const legalDocs = [
   { id: 'dr-tecnico-competente', name: '1.1.a - DR Técnico Competente', desc: 'Declaración responsable técnica.', icon: HardHatIcon, category: 'legalizacion' },
 ];
 
+const extremaduraDocs = [
+  { id: 'cie-valido-extremadura', name: 'CIE Valido Extremadura', desc: 'Certificado de Instalación Eléctrica para Extremadura.', icon: FileCheckIcon, category: 'legalizacion' },
+  { id: 'mtd-baja-tension', name: 'MTD Baja Tension', desc: 'Memoria Técnica de Diseño de Baja Tensión.', icon: ZapIcon, category: 'legalizacion' },
+];
+
 const pacDocs = [
   { id: 'declaracion-propietario', name: '1.- Declaración del Propietario', desc: 'Conformidad para la central de generación.', icon: SignatureIcon, category: 'pac' },
   { id: 'autorizacion-facturacion', name: '2.- Autorización de Facturación', desc: 'Gestión de facturación por representante.', icon: FileTextIcon, category: 'pac' },
@@ -181,6 +187,7 @@ const currentDocs = computed(() => {
   if (activeTab.value === 'justificaciones') return justDocs;
   if (activeTab.value === 'justificaciones50') return just50Docs;
   if (activeTab.value === 'legalizacion') return legalDocs;
+  if (activeTab.value === 'extremadura') return extremaduraDocs;
   if (activeTab.value === 'pac') return pacDocs;
   return [];
 });
@@ -208,6 +215,7 @@ const downloadSelected = () => {
     ...justDocs, 
     ...just50Docs, 
     ...legalDocs,
+    ...extremaduraDocs,
     ...pacDocs
   ].filter(d => selectedIds.value.includes(d.id));
   emit('downloadMany', selectedDocs);
@@ -230,7 +238,7 @@ const downloadSelected = () => {
 
 .modal-content {
   width: 100%;
-  max-width: 900px;
+  max-width: 1050px; /* Ampliado para alojar la nueva pestaña cómodamente */
   max-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -296,22 +304,24 @@ const downloadSelected = () => {
   padding: 0.3rem;
   gap: 0.3rem;
   border-radius: 0.8rem;
+  flex-wrap: wrap; /* Permitir envoltura si se reduce la pantalla */
 }
 
 .tab-btn {
   flex: 1;
+  min-width: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 0.8rem;
+  gap: 0.5rem;
+  padding: 0.8rem 0.5rem;
   border: none;
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
   border-radius: 0.6rem;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
 }
 
