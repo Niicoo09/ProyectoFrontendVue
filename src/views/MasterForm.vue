@@ -459,7 +459,14 @@ watch(
 
 // Computed Properties
 const currentFields = computed(() => {
-  return masterFormFields.filter(f => f.subsection === currentSection.value);
+  return masterFormFields.filter(f => {
+    if (f.subsection !== currentSection.value) return false;
+    if (f.showIf) {
+      const parentVal = formData.value[f.showIf.field];
+      return parentVal === f.showIf.value;
+    }
+    return true;
+  });
 });
 
 // Agrupamos los campos de la sección activa
