@@ -307,6 +307,8 @@ export const masterFormFields = [
   { name: 'coordenadaX', label: 'Coordenada UTM X (ETRS89)', placeholder: 'Ej: 219438', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
   { name: 'coordenadaY', label: 'Coordenada UTM Y (ETRS89)', placeholder: 'Ej: 4293810', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
   { name: 'coordenadaHuso', label: 'Huso UTM', type: 'select', options: ['29', '30'], value: '30', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
+  { name: 'ext_empresaDistribuidora', label: 'Empresa distribuidora', placeholder: 'Ej: Endesa, Iberdrola', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'empresaDistribuidora' },
+  { name: 'ext_cups', label: 'Código unificado punto suministro (CUPS)', placeholder: 'Ej: ES123456789012345678', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'cups' },
   
   // 2. Parámetros Técnicos y Eléctricos (CIE / MTD)
   { name: 'potenciaContratada', label: 'Potencia Contratada Actual (kW)', placeholder: 'Ej: 5.75', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },
