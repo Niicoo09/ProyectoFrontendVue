@@ -437,9 +437,9 @@ watch(
   }
 );
 
-// Watcher para autocompletar la potencia de la batería en líneas y circuitos con el máximo pico de potencia
+// Watcher para autocompletar la potencia de la batería en líneas y circuitos con la energía total de la batería
 watch(
-  () => formData.value.e2_maximoPicoDePotencia,
+  () => formData.value.e2_energiaTotal,
   (newVal) => {
     if (newVal !== undefined && newVal !== null && newVal !== '') {
       formData.value.g_bateriaDiRectaInversorPotencia = newVal;
