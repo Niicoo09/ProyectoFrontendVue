@@ -373,8 +373,6 @@ export const masterFormFields = [
   
 
   // 8. Instalador y Director de Obra
-  { name: 'instaladorNombre', label: 'Nombre Instalador Autorizado', placeholder: 'Ej: EDUARDO RIVERA CABEZAS', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director', value: 'EDUARDO RIVERA CABEZAS' },
-  { name: 'nifInstalador', label: 'NIF del Instalador', placeholder: 'Ej: 28.818.007-L', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director', value: '28.818.007-L' },
   { name: 'llevaProyecto', label: '¿Lleva Proyecto?', type: 'checkbox', value: false, subsection: 'EXTREMADURA', group: 'Instalador y Director' },
   { name: 'directorObra', label: 'Director de Obra', placeholder: 'Ej: Juan García', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director', showIf: { field: 'llevaProyecto', value: true } },
   { name: 'titulacion', label: 'Titulación Director de Obra', placeholder: 'Ej: Ingeniero Industrial', type: 'text', subsection: 'EXTREMADURA', group: 'Instalador y Director', showIf: { field: 'llevaProyecto', value: true } },
