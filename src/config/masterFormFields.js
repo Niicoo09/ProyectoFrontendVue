@@ -309,6 +309,10 @@ export const masterFormFields = [
   { name: 'coordenadaHuso', label: 'Huso UTM', type: 'select', options: ['29', '30'], value: '30', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia' },
   { name: 'ext_empresaDistribuidora', label: 'Empresa distribuidora', placeholder: 'Ej: Endesa, Iberdrola', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'empresaDistribuidora' },
   { name: 'ext_cups', label: 'Código unificado punto suministro (CUPS)', placeholder: 'Ej: ES123456789012345678', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'cups' },
+  { name: 'tipo_via_presentador', label: 'Tipo de Vía (Presentador/Instalación)', type: 'select', options: tipoViaOptions, subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'emplazamientoTipoVia' },
+  { name: 'nombre_via_presentador', label: 'Nombre de Vía (Presentador/Instalación)', placeholder: 'Ej: Real', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'emplazamientoCalle' },
+  { name: 'numero_presentador', label: 'Número (Presentador/Instalación)', placeholder: 'Ej: 12', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'numero' },
+  { name: 'poblacion_presentador', label: 'Población (Presentador/Instalación)', placeholder: 'Ej: Mérida', type: 'text', subsection: 'EXTREMADURA', group: 'Ubicación y Provincia', mapFrom: 'localidadEmplazamiento' },
   
   // 2. Parámetros Técnicos y Eléctricos (CIE / MTD)
   { name: 'potenciaContratada', label: 'Potencia Contratada Actual (kW)', placeholder: 'Ej: 5.75', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },

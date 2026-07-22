@@ -174,6 +174,7 @@ const legalDocs = [
 const extremaduraDocs = [
   { id: 'cie-valido-extremadura', name: 'CIE Valido Extremadura', desc: 'Certificado de Instalación Eléctrica para Extremadura.', icon: FileCheckIcon, category: 'legalizacion' },
   { id: 'mtd-baja-tension', name: 'MTD Baja Tension', desc: 'Memoria Técnica de Diseño de Baja Tensión.', icon: ZapIcon, category: 'legalizacion' },
+  { id: 'dr-habilitacion-profesional-ext', name: 'DR Habilitacion Profesional Extremadura', desc: 'Declaración Responsable de Habilitación Profesional.', icon: HardHatIcon, category: 'legalizacion' },
 ];
 
 const pacDocs = [
