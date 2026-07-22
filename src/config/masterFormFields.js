@@ -377,6 +377,10 @@ export const masterFormFields = [
   { name: 'intensidadNominal', label: 'In (A)', placeholder: 'Ej: 25', type: 'text', subsection: 'EXTREMADURA', group: 'Interruptor general de corte:', mapFrom: 'intensidadNominal' },
   { name: 'poderCorteIG', label: 'Poder de corte (kA)', placeholder: 'Ej: 6', type: 'text', subsection: 'EXTREMADURA', group: 'Interruptor general de corte:', mapFrom: 'poderCorteIG' },
   
+  // 7c. Cálculos Justificativos (MTD)
+  { name: 'potenciaTabla', label: 'Potencia (W) de la tabla', placeholder: 'Ej: 5000', type: 'text', subsection: 'EXTREMADURA', group: 'Calculos Justificativos (MTD)' },
+  { name: 'diferencialTabla', label: 'Prot. Dif (mA) de la tabla', placeholder: 'Ej: 30', type: 'text', subsection: 'EXTREMADURA', group: 'Calculos Justificativos (MTD)' },
+  
 
   // 8. Instalador y Director de Obra
   { name: 'llevaProyecto', label: '¿Lleva Proyecto?', type: 'checkbox', value: false, subsection: 'EXTREMADURA', group: 'Instalador y Director' },
