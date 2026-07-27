@@ -380,7 +380,13 @@ export const masterFormFields = [
   // 7c. Cálculos Justificativos (MTD)
   { name: 'potenciaTabla', label: 'Potencia (W) de la tabla', placeholder: 'Ej: 5000', type: 'text', subsection: 'EXTREMADURA', group: 'Calculos Justificativos (MTD)' },
   { name: 'diferencialTabla', label: 'Prot. Dif (mA) de la tabla', placeholder: 'Ej: 30', type: 'text', subsection: 'EXTREMADURA', group: 'Calculos Justificativos (MTD)' },
-  
+
+  // 7d. Datos Interesado (ASINET)
+  { name: 'apellido1Interesado', label: 'Primer Apellido Interesado', placeholder: 'Ej: Pérez', type: 'text', subsection: 'EXTREMADURA', group: 'Autorización ASINET' },
+  { name: 'apellido2Interesado', label: 'Segundo Apellido Interesado', placeholder: 'Ej: Gómez', type: 'text', subsection: 'EXTREMADURA', group: 'Autorización ASINET' },
+  { name: 'nombreInteresado', label: 'Nombre/Razón Social Interesado', placeholder: 'Ej: Juan', type: 'text', subsection: 'EXTREMADURA', group: 'Autorización ASINET', mapFrom: 'apellidosNombre' },
+  { name: 'nifCifInteresado', label: 'NIF/CIF Interesado', placeholder: 'Ej: 12345678A', type: 'text', subsection: 'EXTREMADURA', group: 'Autorización ASINET', mapFrom: 'nifCif' },
+
 
   // 8. Instalador y Director de Obra
   { name: 'llevaProyecto', label: '¿Lleva Proyecto?', type: 'checkbox', value: false, subsection: 'EXTREMADURA', group: 'Instalador y Director' },
