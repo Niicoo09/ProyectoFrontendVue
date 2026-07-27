@@ -176,6 +176,7 @@ const extremaduraDocs = [
   { id: 'mtd-baja-tension', name: 'MTD Baja Tension', desc: 'Memoria Técnica de Diseño de Baja Tensión.', icon: ZapIcon, category: 'legalizacion' },
   { id: 'dr-habilitacion-profesional-ext', name: 'DR Habilitacion Profesional Extremadura', desc: 'Declaración Responsable de Habilitación Profesional.', icon: HardHatIcon, category: 'legalizacion' },
   { id: 'autorizacion-asinet', name: 'Autorizacion ASINET', desc: 'Autorización para tramitación en ASINET Extremadura.', icon: SignatureIcon, category: 'legalizacion' },
+  { id: 'datos-instalacion-extremadura', name: 'Datos Instalacion Extremadura', desc: 'Documento de Datos de la Instalación de Extremadura.', icon: ClipboardCheckIcon, category: 'legalizacion' },
 ];
 
 const pacDocs = [

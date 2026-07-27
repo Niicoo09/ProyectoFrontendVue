@@ -387,6 +387,18 @@ export const masterFormFields = [
   { name: 'nombreInteresado', label: 'Nombre/Razón Social Interesado', placeholder: 'Ej: Juan', type: 'text', subsection: 'EXTREMADURA', group: 'Autorización ASINET', mapFrom: 'apellidosNombre' },
   { name: 'nifCifInteresado', label: 'NIF/CIF Interesado', placeholder: 'Ej: 12345678A', type: 'text', subsection: 'EXTREMADURA', group: 'Autorización ASINET', mapFrom: 'nifCif' },
 
+  // 7e. Datos Adicionales (Datos Instalación Extremadura)
+  { name: 'numeroCau', label: 'Nº CAU', placeholder: 'Ej: CAU123456...', type: 'text', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'coordenadasInstalacion', label: 'Coordenadas de la instalación', placeholder: 'Ej: 38.423, -6.412', type: 'text', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'conExcedentes', label: 'Con excedentes', type: 'select', options: ['SI', 'NO'], value: 'SI', placeholder: 'Seleccione...', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'sueloUrbano', label: 'Suelo urbano', type: 'select', options: ['SI', 'NO'], value: 'SI', placeholder: 'Seleccione...', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'tensionGeneracion', label: 'Tensión de generación (V)', type: 'number', value: 230, placeholder: 'Ej: 230', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'redInterior', label: '¿Conectada en Red interior?', type: 'select', options: ['SI', 'NO'], value: 'SI', placeholder: 'Seleccione...', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'tensionFrontera', label: 'Tensión punto frontera (V)', type: 'number', value: 230, placeholder: 'Ej: 230', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'distribuidora', label: 'Distribuidora', placeholder: 'Ej: e-distribución', type: 'text', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura', mapFrom: 'empresaDistribuidora' },
+  { name: 'imagenPotenciaContratada', label: 'Potencia Contratada (Foto)', type: 'file', accept: 'image/*', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+  { name: 'imagenImplantacionPaneles', label: 'Implantación de Paneles (Foto)', type: 'file', accept: 'image/*', subsection: 'EXTREMADURA', group: 'Datos Instalación Extremadura' },
+
 
   // 8. Instalador y Director de Obra
   { name: 'llevaProyecto', label: '¿Lleva Proyecto?', type: 'checkbox', value: false, subsection: 'EXTREMADURA', group: 'Instalador y Director' },
