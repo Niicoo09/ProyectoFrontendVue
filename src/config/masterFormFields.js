@@ -113,6 +113,24 @@ export const masterFormFields = [
     group: 'Modulo',
     showIf: { field: 'tieneSegundaDisposicion', value: true }
   },
+  { 
+    name: 'numModulosDisposicion1', 
+    label: 'Nº Módulos en Disposición 1', 
+    placeholder: 'Ej: 6', 
+    type: 'text', 
+    subsection: 'E2', 
+    group: 'Modulo',
+    showIf: { field: 'tieneSegundaDisposicion', value: true }
+  },
+  { 
+    name: 'numModulosDisposicion2', 
+    label: 'Nº Módulos en Disposición 2', 
+    placeholder: 'Ej: 4', 
+    type: 'text', 
+    subsection: 'E2', 
+    group: 'Modulo',
+    showIf: { field: 'tieneSegundaDisposicion', value: true }
+  },
 
   // E2.4 Inversor
   {
