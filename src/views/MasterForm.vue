@@ -342,6 +342,12 @@ const buildInitialFormData = (baseData = {}) => {
       result[field.name] = sourceVal;
     }
   });
+
+  // Asegurar que uso_instalacion siempre tenga valor por defecto si vino vacío de la base de datos
+  if (!result.uso_instalacion || result.uso_instalacion === '') {
+    result.uso_instalacion = 'produccion de energia electrica';
+  }
+
   return result;
 };
 
