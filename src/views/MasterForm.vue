@@ -305,34 +305,41 @@ const onDrop = async (event, fieldName) => {
 const buildInitialFormData = (baseData = {}) => {
   const result = { ...getMasterFormDefaultData(), ...baseData };
   
+  // Extraer nombre y apellidos desde apellidosNombre para rellenar campos de presentador si están vacíos
+  const sourceValue = result['apellidosNombre'];
+  if (sourceValue && (!result.nombre_presentador || !result.apellido1_presentador)) {
+    let nombre = sourceValue;
+    let ap1 = '';
+    let ap2 = '';
+    if (sourceValue.includes(',')) {
+      const partes = sourceValue.split(',');
+      nombre = partes[1].trim();
+      const apellidos = partes[0].trim().split(/\s+/);
+      ap1 = apellidos[0] || '';
+      ap2 = apellidos.slice(1).join(' ') || '';
+    } else {
+      const partes = sourceValue.trim().split(/\s+/);
+      if (partes.length >= 3) {
+        nombre = partes[0];
+        ap1 = partes[1];
+        ap2 = partes.slice(2).join(' ');
+      } else if (partes.length === 2) {
+        nombre = partes[0];
+        ap1 = partes[1];
+      }
+    }
+    if (!result.nombre_presentador) result.nombre_presentador = nombre;
+    if (!result.apellido1_presentador) result.apellido1_presentador = ap1;
+    if (!result.apellido2_presentador) result.apellido2_presentador = ap2;
+  }
+
   // Lógica mapFrom en carga inicial
   masterFormFields.forEach(field => {
     if (!field.mapFrom) return;
     const destValue = result[field.name];
-    const sourceValue = result[field.mapFrom];
-    if ((!destValue || destValue === '') && sourceValue) {
-      if (field.name === 'nombre_presentador' && sourceValue) {
-        let nombre = sourceValue, ap1 = '', ap2 = '';
-        if (sourceValue.includes(',')) {
-          const partes = sourceValue.split(',');
-          nombre = partes[1].trim();
-          const apellidos = partes[0].trim().split(' ');
-          ap1 = apellidos[0] || '';
-          ap2 = apellidos.slice(1).join(' ') || '';
-        } else {
-          const partes = sourceValue.trim().split(' ');
-          if (partes.length >= 3) {
-            nombre = partes[0]; ap1 = partes[1]; ap2 = partes.slice(2).join(' ');
-          } else if (partes.length === 2) {
-            nombre = partes[0]; ap1 = partes[1];
-          }
-        }
-        if (!result.nombre_presentador) result.nombre_presentador = nombre;
-        if (!result.apellido1_presentador) result.apellido1_presentador = ap1;
-        if (!result.apellido2_presentador) result.apellido2_presentador = ap2;
-        return;
-      }
-      result[field.name] = sourceValue;
+    const sourceVal = result[field.mapFrom];
+    if ((destValue === undefined || destValue === '') && sourceVal !== undefined && sourceVal !== '') {
+      result[field.name] = sourceVal;
     }
   });
   return result;
@@ -559,20 +566,23 @@ watch(formData, (newVal) => {
                if (sourceValue.includes(',')) {
                  const partes = sourceValue.split(',');
                  nombre = partes[1].trim();
-                 const apellidos = partes[0].trim().split(' ');
+                 const apellidos = partes[0].trim().split(/\s+/);
                  ap1 = apellidos[0] || '';
                  ap2 = apellidos.slice(1).join(' ') || '';
                } else {
-                 const partes = sourceValue.trim().split(' ');
+                 const partes = sourceValue.trim().split(/\s+/);
                  if (partes.length >= 3) {
-                   nombre = partes[0]; ap1 = partes[1]; ap2 = partes.slice(2).join(' ') || '';
+                   nombre = partes[0];
+                   ap1 = partes[1];
+                   ap2 = partes.slice(2).join(' ') || '';
                  } else if (partes.length === 2) {
-                   nombre = partes[0]; ap1 = partes[1];
+                   nombre = partes[0];
+                   ap1 = partes[1];
                  }
                }
                formData.value.nombre_presentador = nombre;
-               if (!formData.value.apellido1_presentador) formData.value.apellido1_presentador = ap1;
-               if (!formData.value.apellido2_presentador) formData.value.apellido2_presentador = ap2;
+               formData.value.apellido1_presentador = ap1;
+               formData.value.apellido2_presentador = ap2;
                changed = true;
                return;
             }

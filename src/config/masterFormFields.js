@@ -663,7 +663,7 @@ export const masterFormFields = [
   { name: 'tiene_acumulacion', label: '¿Tiene Acumulación (Baterías)?', type: 'select', options: ['si', 'no'], value: 'no', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'almacenamiento', mapTransform: { 'con almacenamiento': 'si', 'sin almacenamiento': 'no' } },
   { name: 'potencia_acumulacion', label: 'Potencia Acumulación (kW)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'e2_potenciaMaximaSalida' },
   { name: 'energia_almacenada', label: 'Energía Máx. Almacenada (kWh)', type: 'text', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', mapFrom: 'e2_energiaTotal' },
-  { name: 'uso_instalacion', label: 'Uso de la instalación', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: 'produccion energia electrica', options: [{ value: 'produccion energia electrica', label: 'Producción de Energía Eléctrica' }] },
+  { name: 'uso_instalacion', label: 'Uso de la instalación', type: 'select', subsection: 'PRESENTACIÓN', group: 'Instalación (Robot)', value: 'produccion de energia electrica', options: [{ value: 'produccion de energia electrica', label: 'Producción de energía eléctrica' }] },
   {
     name: 'ps_distribuidora',
     label: 'Empresa Distribuidora (Oficial)',
