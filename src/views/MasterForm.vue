@@ -460,15 +460,35 @@ watch(
   }
 );
 
-// Watcher para autocompletar la potencia del inversor-red en lineas y circuitos (actualizado)
+// Watcher para autocompletar la tensión de salida total de la batería (número de baterías * capacidad nominal)
 watch(
-  () => formData.value.e2_potenciaNominalInversores,
-  (newVal) => {
-    if (newVal !== undefined && newVal !== null && newVal !== '') {
-      formData.value.g_inversorRedPotencia = newVal;
+  [() => formData.value.numeroBaterias, () => formData.value.capacidadNominalBateria],
+  ([numBat, capBat]) => {
+    if (numBat !== undefined && capBat !== undefined && numBat !== '' && capBat !== '') {
+      const n = parseFloat(String(numBat).replace(',', '.'));
+      const c = parseFloat(String(capBat).replace(',', '.'));
+      if (!isNaN(n) && !isNaN(c)) {
+        const total = n * c;
+        formData.value.tensionSalidaTotalBateria = String(total).replace('.', ',');
+      }
     }
   }
 );
+
+// Watcher para autocompletar coordenadas de la instalación en Extremadura
+watch(
+  [() => formData.value.coordenadaX, () => formData.value.coordenadaY],
+  ([cX, cY]) => {
+    if (cX && cY) {
+      formData.value.coordenadasInstalacion = `${cX}, ${cY}`;
+    } else if (cX) {
+      formData.value.coordenadasInstalacion = cX;
+    } else if (cY) {
+      formData.value.coordenadasInstalacion = cY;
+    }
+  }
+);
+
 
 // Computed Properties
 const currentFields = computed(() => {

@@ -363,8 +363,6 @@ export const masterFormFields = [
   { name: 'tensionSuministro', label: 'Tensión de Suministro (V)', placeholder: 'Ej: 230', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas', mapFrom: 'e2_relacionTensionInversor', mapTransform: { '230V/400V': '400', '230': '230', '400': '400' } },
   { name: 'potenciaInstaladaPrevista', label: 'Potencia Instalada Prevista (kW)', placeholder: 'Ej: 5.0', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas', mapFrom: 'e2_potenciaNominalInversores' },
   { name: 'potenciaMaximaContratar', label: 'Potencia Máxima a Contratar (kW)', placeholder: 'Ej: 5.75', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },
-  { name: 'superficie', label: 'Superficie (m²)', placeholder: 'Ej: 100', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },
-  { name: 'ocupacion', label: 'Ocupación (personas)', placeholder: 'Ej: 1', type: 'text', subsection: 'EXTREMADURA', group: 'Características Eléctricas' },
   
   // 3. Distribución y Conexión
   { name: 'esInstalacionAislada', label: 'Instalación Aislada (X)', type: 'checkbox', subsection: 'EXTREMADURA', group: 'Modalidad de Autoconsumo' },
