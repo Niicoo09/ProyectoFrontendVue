@@ -302,35 +302,56 @@ const onDrop = async (event, fieldName) => {
   }
 };
 
+const parseSpanishName = (sourceValue) => {
+  if (!sourceValue || typeof sourceValue !== 'string') {
+    return { nombre: '', ap1: '', ap2: '' };
+  }
+  const clean = sourceValue.trim();
+  if (!clean) return { nombre: '', ap1: '', ap2: '' };
+
+  if (clean.includes(',')) {
+    const partes = clean.split(',');
+    const nombre = partes.slice(1).join(',').trim();
+    const apellidosStr = partes[0].trim();
+    const apellidos = apellidosStr.split(/\s+/).filter(Boolean);
+    const ap1 = apellidos[0] || '';
+    const ap2 = apellidos.slice(1).join(' ') || '';
+    return { nombre, ap1, ap2 };
+  }
+
+  const partes = clean.split(/\s+/).filter(Boolean);
+  if (partes.length === 1) {
+    return { nombre: partes[0], ap1: '', ap2: '' };
+  } else if (partes.length === 2) {
+    return { nombre: partes[0], ap1: partes[1], ap2: '' };
+  } else if (partes.length === 3) {
+    return { nombre: partes[0], ap1: partes[1], ap2: partes[2] };
+  } else if (partes.length >= 4) {
+    const nombre = partes.slice(0, partes.length - 2).join(' ');
+    const ap1 = partes[partes.length - 2];
+    const ap2 = partes[partes.length - 1];
+    return { nombre, ap1, ap2 };
+  }
+
+  return { nombre: clean, ap1: '', ap2: '' };
+};
+
 const buildInitialFormData = (baseData = {}) => {
   const result = { ...getMasterFormDefaultData(), ...baseData };
   
-  // Extraer nombre y apellidos desde apellidosNombre para rellenar campos de presentador si están vacíos
+  // Extraer nombre y apellidos desde apellidosNombre para rellenar campos de presentador
   const sourceValue = result['apellidosNombre'];
-  if (sourceValue && (!result.nombre_presentador || !result.apellido1_presentador)) {
-    let nombre = sourceValue;
-    let ap1 = '';
-    let ap2 = '';
-    if (sourceValue.includes(',')) {
-      const partes = sourceValue.split(',');
-      nombre = partes[1].trim();
-      const apellidos = partes[0].trim().split(/\s+/);
-      ap1 = apellidos[0] || '';
-      ap2 = apellidos.slice(1).join(' ') || '';
-    } else {
-      const partes = sourceValue.trim().split(/\s+/);
-      if (partes.length >= 3) {
-        nombre = partes[0];
-        ap1 = partes[1];
-        ap2 = partes.slice(2).join(' ');
-      } else if (partes.length === 2) {
-        nombre = partes[0];
-        ap1 = partes[1];
-      }
+  if (sourceValue) {
+    const { nombre, ap1, ap2 } = parseSpanishName(sourceValue);
+    if (!result.nombre_presentador || result.nombre_presentador === 'Vidal') {
+      result.nombre_presentador = nombre;
     }
-    if (!result.nombre_presentador) result.nombre_presentador = nombre;
-    if (!result.apellido1_presentador) result.apellido1_presentador = ap1;
-    if (!result.apellido2_presentador) result.apellido2_presentador = ap2;
+    if (!result.apellido1_presentador || result.apellido1_presentador === 'V') {
+      result.apellido1_presentador = ap1;
+    }
+    if (!result.apellido2_presentador || !result.nombre_presentador || result.nombre_presentador === 'Vidal') {
+      result.apellido2_presentador = ap2;
+    }
   }
 
   // Lógica mapFrom en carga inicial
@@ -422,26 +443,52 @@ watch(() => formData.value.pemCalculoPresupuestoTotal, (newVal) => {
   }
 });
 
-// Watcher para calcular la potencia pico del generador, la tensión Vpmp y la potencia en líneas y circuitos
+// Watcher para calcular la potencia pico del generador, la tensión Vpmp y la potencia en líneas y circuitos (soporta 2 marcas de módulos)
 watch(
-  [() => formData.value.e2_potenciaPicoModulo, () => formData.value.e2_totalModulos],
-  ([potMod, totMod]) => {
-    if (potMod !== undefined && totMod !== undefined && potMod !== '' && totMod !== '') {
-      const pMod = parseFloat(String(potMod).replace(',', '.'));
-      const tMod = parseFloat(String(totMod).replace(',', '.'));
-      
-      if (!isNaN(pMod) && !isNaN(tMod)) {
-        const genPico = Math.round(pMod * tMod);
-        formData.value.e2_potenciaPicoGenerador = String(genPico);
-        
-        const vPmp = 46.55 * tMod;
-        const formattedVPmp = String(Math.round(vPmp * 100) / 100).replace('.', ',');
-        formData.value.e2_tensionVpmpGenerador = formattedVPmp;
-        
-        const genKw = genPico / 1000;
-        const formattedKw = genKw.toFixed(2).replace('.', ',');
-        formData.value.g_generadorDirectoInversorPotencia = formattedKw;
+  [
+    () => formData.value.e2_potenciaPicoModulo,
+    () => formData.value.e2_totalModulos1,
+    () => formData.value.e2_totalModulos,
+    () => formData.value.tieneSegundaMarcaModulo,
+    () => formData.value.e2_potenciaPicoModulo2,
+    () => formData.value.e2_totalModulos2
+  ],
+  ([potMod1, totMod1, totModLegacy, tieneMarca2, potMod2, totMod2]) => {
+    const pMod1 = parseFloat(String(potMod1 || '').replace(',', '.'));
+    const rawTot1 = totMod1 !== undefined && totMod1 !== '' ? totMod1 : totModLegacy;
+    const tMod1 = parseFloat(String(rawTot1 || '').replace(',', '.'));
+
+    const validMod1 = !isNaN(pMod1) && !isNaN(tMod1) && pMod1 > 0 && tMod1 > 0;
+    
+    let genPico = 0;
+    let totalModulosSum = 0;
+
+    if (validMod1) {
+      genPico += pMod1 * tMod1;
+      totalModulosSum += tMod1;
+    }
+
+    if (tieneMarca2) {
+      const pMod2 = parseFloat(String(potMod2 || '').replace(',', '.'));
+      const tMod2 = parseFloat(String(totMod2 || '').replace(',', '.'));
+      if (!isNaN(pMod2) && !isNaN(tMod2) && pMod2 > 0 && tMod2 > 0) {
+        genPico += pMod2 * tMod2;
+        totalModulosSum += tMod2;
       }
+    }
+
+    if (totalModulosSum > 0) {
+      const roundedGenPico = Math.round(genPico);
+      formData.value.e2_potenciaPicoGenerador = String(roundedGenPico);
+      formData.value.e2_totalModulos = String(Math.round(totalModulosSum));
+
+      const vPmp = 46.55 * totalModulosSum;
+      const formattedVPmp = String(Math.round(vPmp * 100) / 100).replace('.', ',');
+      formData.value.e2_tensionVpmpGenerador = formattedVPmp;
+
+      const genKw = roundedGenPico / 1000;
+      const formattedKw = genKw.toFixed(2).replace('.', ',');
+      formData.value.g_generadorDirectoInversorPotencia = formattedKw;
     } else {
       formData.value.e2_potenciaPicoGenerador = '';
       formData.value.e2_tensionVpmpGenerador = '';
@@ -456,6 +503,16 @@ watch(
   (newVal) => {
     if (newVal !== undefined && newVal !== null && newVal !== '') {
       formData.value.g_bateriaDiRectaInversorPotencia = newVal;
+    }
+  }
+);
+
+// Watcher para autocompletar la potencia del inversor-red en líneas y circuitos con la potencia nominal total de inversores
+watch(
+  () => formData.value.e2_potenciaNominalInversores,
+  (newVal) => {
+    if (newVal !== undefined && newVal !== null && newVal !== '') {
+      formData.value.g_inversorRedPotencia = newVal;
     }
   }
 );
@@ -586,26 +643,7 @@ watch(formData, (newVal) => {
             }
 
             if (field.name === 'nombre_presentador' && sourceValue) {
-               let nombre = sourceValue;
-               let ap1 = '';
-               let ap2 = '';
-               if (sourceValue.includes(',')) {
-                 const partes = sourceValue.split(',');
-                 nombre = partes[1].trim();
-                 const apellidos = partes[0].trim().split(/\s+/);
-                 ap1 = apellidos[0] || '';
-                 ap2 = apellidos.slice(1).join(' ') || '';
-               } else {
-                 const partes = sourceValue.trim().split(/\s+/);
-                 if (partes.length >= 3) {
-                   nombre = partes[0];
-                   ap1 = partes[1];
-                   ap2 = partes.slice(2).join(' ') || '';
-                 } else if (partes.length === 2) {
-                   nombre = partes[0];
-                   ap1 = partes[1];
-                 }
-               }
+               const { nombre, ap1, ap2 } = parseSpanishName(sourceValue);
                formData.value.nombre_presentador = nombre;
                formData.value.apellido1_presentador = ap1;
                formData.value.apellido2_presentador = ap2;

@@ -54,7 +54,7 @@ export const masterFormFields = [
 /*   { name: 'e2_tecnologiaCelulaModulo', label: 'TECNOLOGÍA DE LA CÉLULA', placeholder: 'Ej: Monocristalino -PERC-', type: 'text', subsection: 'E2' },
  */  {
     name: 'e2_marcaModeloModulo',
-    label: 'MARCA Y MODELO',
+    label: 'MARCA Y MODELO 1',
     placeholder: 'Ej: JA Solar JAM72S30 450/MR',
     type: 'equipment-autocomplete',
     equipmentType: 'modulos',
@@ -66,7 +66,7 @@ export const masterFormFields = [
       tensionVpmp: 'e2_tensionVpmpGenerador',
       orientacion: 'e2_orientacionGenerador',
       inclinacion: 'e2_inclinacionGenerador',
-      totalModulos: 'e2_totalModulos',
+      totalModulos: 'e2_totalModulos1',
       modulosEnSerie: 'e2_modulosEnSerie',
       ramasEnParalelo: 'e2_ramasEnParalelo',
       disposicionModulos: 'disposicionModulos'
@@ -74,7 +74,33 @@ export const masterFormFields = [
     subsection: 'E2',
     group: 'Modulo'
   },
-  { name: 'e2_potenciaPicoModulo', label: 'POTENCIA PICO (Wp) DEL MÓDULO', placeholder: 'Ej: 450', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_potenciaPicoModulo', label: 'POTENCIA PICO (Wp) DEL MÓDULO 1', placeholder: 'Ej: 450', type: 'text', subsection: 'E2', group: 'Modulo' },
+  { name: 'e2_totalModulos1', label: 'Nº MÓDULOS (MARCA 1)', placeholder: 'Ej: 3', type: 'text', subsection: 'E2', group: 'Modulo', mapFrom: 'e2_totalModulos' },
+  { 
+    name: 'tieneSegundaMarcaModulo', 
+    label: '¿Tiene una segunda marca/modelo de módulos?', 
+    type: 'checkbox', 
+    value: false, 
+    subsection: 'E2', 
+    group: 'Modulo' 
+  },
+  {
+    name: 'e2_marcaModeloModulo2',
+    label: 'MARCA Y MODELO 2',
+    placeholder: 'Ej: Aiko AIKO-A610-MAH72Mw',
+    type: 'equipment-autocomplete',
+    equipmentType: 'modulos',
+    mapping: {
+      marca: 'e2_marcaModeloModulo2',
+      potenciaPicoModulo: 'e2_potenciaPicoModulo2',
+      totalModulos: 'e2_totalModulos2'
+    },
+    subsection: 'E2',
+    group: 'Modulo',
+    showIf: { field: 'tieneSegundaMarcaModulo', value: true }
+  },
+  { name: 'e2_potenciaPicoModulo2', label: 'POTENCIA PICO (Wp) DEL MÓDULO 2', placeholder: 'Ej: 610', type: 'text', subsection: 'E2', group: 'Modulo', showIf: { field: 'tieneSegundaMarcaModulo', value: true } },
+  { name: 'e2_totalModulos2', label: 'Nº MÓDULOS (MARCA 2)', placeholder: 'Ej: 4', type: 'text', subsection: 'E2', group: 'Modulo', showIf: { field: 'tieneSegundaMarcaModulo', value: true } },
   /*   { name: 'e2_toncModulo', label: 'TONC (ºC)', placeholder: 'Ej: 45', type: 'text', subsection: 'E2' },
    */
   // E2.3 Generador Fotovoltaico
@@ -283,7 +309,7 @@ export const masterFormFields = [
    { name: 'g_generadorDirectoInversorIntensidad', label: 'Generador-Inversor (directo): Intensidad Admisible (A)', placeholder: 'Ej: 49', type: 'text', subsection: 'G' },
    { name: 'g_generadorDirectoInversorCaidaTension', label: 'Generador-Inversor (directo): Caída de Tensión (%)', placeholder: 'Ej: < 1.5', type: 'text', subsection: 'G' },
     */
-  { name: 'g_inversorRedPotencia', label: 'Inversor-Red (interconectadas): Potencia (kW)', placeholder: 'Ej: 3000', type: 'text', subsection: 'G' },
+  { name: 'g_inversorRedPotencia', label: 'Inversor-Red (interconectadas): Potencia (kW)', placeholder: 'Ej: 3000', type: 'text', subsection: 'G', mapFrom: 'e2_potenciaNominalInversores' },
   /*  { name: 'g_inversorRedLongitud', label: 'Inversor-Red (interconectadas): Longitud (m)', placeholder: 'Ej: 5', type: 'text', subsection: 'G' },
    { name: 'g_inversorRedSeccion', label: 'Inversor-Red (interconectadas): Material/Sección (mm²)', placeholder: 'Ej: 6', type: 'text', subsection: 'G' },
    { name: 'g_inversorRedIntensidad', label: 'Inversor-Red (interconectadas): Intensidad Admisible (A)', placeholder: 'Ej: 44', type: 'text', subsection: 'G' },
