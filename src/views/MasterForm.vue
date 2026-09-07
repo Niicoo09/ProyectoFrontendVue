@@ -481,6 +481,7 @@ watch(
       const roundedGenPico = Math.round(genPico);
       formData.value.e2_potenciaPicoGenerador = String(roundedGenPico);
       formData.value.e2_totalModulos = String(Math.round(totalModulosSum));
+      formData.value.e2_modulosEnSerie = String(Math.round(totalModulosSum));
 
       const vPmp = 46.55 * totalModulosSum;
       const formattedVPmp = String(Math.round(vPmp * 100) / 100).replace('.', ',');
