@@ -518,20 +518,6 @@ watch(
   }
 );
 
-// Watcher para autocompletar la tensión de salida total de la batería (número de baterías * capacidad nominal)
-watch(
-  [() => formData.value.numeroBaterias, () => formData.value.capacidadNominalBateria],
-  ([numBat, capBat]) => {
-    if (numBat !== undefined && capBat !== undefined && numBat !== '' && capBat !== '') {
-      const n = parseFloat(String(numBat).replace(',', '.'));
-      const c = parseFloat(String(capBat).replace(',', '.'));
-      if (!isNaN(n) && !isNaN(c)) {
-        const total = n * c;
-        formData.value.tensionSalidaTotalBateria = String(total).replace('.', ',');
-      }
-    }
-  }
-);
 
 // Watcher para autocompletar coordenadas de la instalación en Extremadura
 watch(

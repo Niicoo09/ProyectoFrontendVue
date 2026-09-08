@@ -439,7 +439,6 @@ export const masterFormFields = [
   { name: 'seccionFase', label: 'Sección (mm²)', placeholder: 'Ej: 10', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual:', mapFrom: 'seccionFase' },
   { name: 'aislamientoDI', label: 'Aislamiento', placeholder: 'Ej: XLPE', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual:', mapFrom: 'aislamientoDI', value: 'XLPE' },
   { name: 'potenciaMaximaAdmisible', label: 'Potencia máxima admisible (kW)', placeholder: 'Ej: 10.35', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual:', mapFrom: 'e2_potenciaNominalInversor' },
-  { name: 'intensidadFusiblesCGP', label: 'In fusibles (A)', placeholder: 'Ej: 50', type: 'text', subsection: 'EXTREMADURA', group: 'Derivación Individual:', mapFrom: 'intensidadFusiblesCGP' },
   
   // 7b. Interruptor general de corte
   { name: 'intensidadNominal', label: 'In (A)', placeholder: 'Ej: 25', type: 'text', subsection: 'EXTREMADURA', group: 'Interruptor general de corte:', mapFrom: 'intensidadNominal' },
