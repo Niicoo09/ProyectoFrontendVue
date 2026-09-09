@@ -533,6 +533,35 @@ watch(
   }
 );
 
+// Watcher para autocompletar la distribuidora abajo desde la empresa distribuidora arriba en Extremadura
+watch(
+  () => formData.value.ext_empresaDistribuidora,
+  (newVal) => {
+    if (newVal !== undefined && newVal !== null) {
+      formData.value.distribuidora = newVal;
+    }
+  }
+);
+
+// Watcher para calcular la capacidad total de batería en Extremadura (número de baterías * capacidad nominal)
+watch(
+  [() => formData.value.numeroBaterias, () => formData.value.capacidadNominalBateria],
+  ([numBat, capBat]) => {
+    if (numBat !== undefined && capBat !== undefined && numBat !== '' && capBat !== '') {
+      const n = parseFloat(String(numBat).replace(',', '.'));
+      const c = parseFloat(String(capBat).replace(',', '.'));
+      if (!isNaN(n) && !isNaN(c)) {
+        const total = n === 1 ? c : n * c;
+        formData.value.capacidadTotalBateria = String(total).replace('.', ',');
+      }
+    } else if (capBat !== undefined && capBat !== '') {
+      formData.value.capacidadTotalBateria = String(capBat);
+    } else {
+      formData.value.capacidadTotalBateria = '';
+    }
+  }
+);
+
 
 // Computed Properties
 const currentFields = computed(() => {

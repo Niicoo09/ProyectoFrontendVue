@@ -431,6 +431,7 @@ export const masterFormFields = [
   // 6. Baterías y Almacenamiento
   { name: 'numeroBaterias', label: 'Número de Baterías', placeholder: 'Ej: 1', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías', mapFrom: 'numeroBaterias' },
   { name: 'capacidadNominalBateria', label: 'Capacidad Nominal Batería (Ah)', placeholder: 'Ej: 100', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías', mapFrom: 'capacidadNominalBateria' },
+  { name: 'capacidadTotalBateria', label: 'Capacidad Total Batería (Ah)', placeholder: 'Ej: 100', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías' },
   { name: 'tensionSalidaTotalBateria', label: 'Tensión Salida Total Batería (V)', placeholder: 'Ej: 48', type: 'text', subsection: 'EXTREMADURA', group: 'Baterías', mapFrom: 'tensionSalidaTotalBateria' },
   
   // 7. Derivación Individual
